@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/menus/MainMenu.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/CurrentScene.gd" type="Script" id=2]
+[ext_resource path="res://scripts/GameSoundManager.gd" type="Script" id=3]
 [ext_resource path="res://scripts/SceneManager.gd" type="Script" id=6]
 [ext_resource path="res://assets/sprites/Transition Circle Sheet.png" type="Texture" id=7]
 
@@ -90,6 +92,7 @@ tracks/2/keys = {
 script = ExtResource( 6 )
 
 [node name="CurrentScene" type="Node" parent="."]
+script = ExtResource( 2 )
 
 [node name="MainMenu" parent="CurrentScene" instance=ExtResource( 1 )]
 
@@ -111,13 +114,16 @@ anims/fade_to_normal = SubResource( 2 )
 volume_db = -40.0
 bus = "Music"
 
-[node name="VolumeTween" type="Tween" parent="GameMusic"]
-
 [node name="SFX1" type="AudioStreamPlayer" parent="."]
 bus = "SFX"
 
 [node name="SFX2" type="AudioStreamPlayer" parent="."]
 bus = "SFX"
 
+[node name="VolumeTween" type="Tween" parent="."]
+
+[node name="GameSoundManager" type="Node" parent="."]
+script = ExtResource( 3 )
+
 [connection signal="animation_finished" from="ScreenTransitionLayer/AnimationPlayer" to="." method="_on_transition_animation_finished"]
-[connection signal="tween_completed" from="GameMusic/VolumeTween" to="." method="_on_VolumeTween_tween_completed"]
+[connection signal="tween_completed" from="VolumeTween" to="." method="_on_VolumeTween_tween_completed"]

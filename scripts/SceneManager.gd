@@ -5,7 +5,7 @@ const MAIN_MENU_MUSIC: AudioStream = preload("res://assets/audio/main-menu-music
 onready var currentScene: Node = $CurrentScene
 onready var animPlayer: AnimationPlayer = $ScreenTransitionLayer/AnimationPlayer
 onready var gameMusic: AudioStreamPlayer = $GameMusic
-onready var volumeTween: Tween = $GameMusic/VolumeTween
+onready var volumeTween: Tween = $VolumeTween
 onready var SFXPlayer1: AudioStreamPlayer = $SFX1
 onready var SFXPlayer2: AudioStreamPlayer = $SFX2
 
@@ -14,7 +14,6 @@ var next_audio: AudioStream = null
 var mute_db: float = -60
 var max_db: float = 0
 var db_trans_time: float = 5
-var avl_SFX_players: Array = []
 var SFX_queue: Array = []
 
 func _ready() -> void:
