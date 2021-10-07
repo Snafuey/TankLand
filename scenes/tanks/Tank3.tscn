@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/tanks/TankSprite.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/sprites/Tank3.png" type="Texture" id=2]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 11, 1.5 )
+
+[node name="Tank3" type="KinematicBody2D" groups=[
+"tank",
+]]
+collision_layer = 2
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -1.5 )
+shape = SubResource( 1 )
+
+[node name="TankSprite" parent="." instance=ExtResource( 1 )]
+texture = ExtResource( 2 )
+
+[node name="Barrel" parent="TankSprite" index="0"]
+position = Vector2( -6, -1 )
+region_rect = Rect2( 0, 0, 8, 1 )
+
+[node name="Muzzle" parent="TankSprite/Barrel" index="0"]
+position = Vector2( 8, 0 )
+
+[node name="MuzzleFlash" parent="TankSprite/Barrel" index="1"]
+position = Vector2( 8, 0 )
+
+[editable path="TankSprite"]

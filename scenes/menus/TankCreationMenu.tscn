@@ -1,0 +1,480 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/sprites/Tank Creation Menu.png" type="Texture" id=1]
+[ext_resource path="res://assets/fonts/RobotoBold18.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/sprites/Tank Creation AI Overlay.png" type="Texture" id=3]
+[ext_resource path="res://scripts/CreateTank.gd" type="Script" id=4]
+[ext_resource path="res://resources/PlayerAIButtonGroup.tres" type="ButtonGroup" id=5]
+[ext_resource path="res://resources/TankSelectButtonGroup.tres" type="ButtonGroup" id=6]
+[ext_resource path="res://assets/sprites/Tank Creation Icons.png" type="Texture" id=7]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[node name="TankCreationMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.545098, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UIPanel" type="TextureRect" parent="CenterContainer"]
+margin_left = 155.0
+margin_top = 152.0
+margin_right = 805.0
+margin_bottom = 388.0
+texture = ExtResource( 1 )
+
+[node name="Title" type="Label" parent="CenterContainer/UIPanel"]
+anchor_right = 1.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+text = "Player 1 (of 2)"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameLabel" type="Label" parent="CenterContainer/UIPanel"]
+margin_left = 105.0
+margin_top = 30.0
+margin_right = 160.0
+margin_bottom = 54.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+text = "Name:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameInput" type="LineEdit" parent="CenterContainer/UIPanel"]
+margin_left = 175.0
+margin_top = 30.0
+margin_right = 325.0
+margin_bottom = 54.0
+rect_min_size = Vector2( 0, 24 )
+custom_styles/focus = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/cursor_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+max_length = 10
+virtual_keyboard_enabled = false
+caret_blink = true
+caret_blink_speed = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AISelectButtons" type="TextureRect" parent="CenterContainer/UIPanel"]
+visible = false
+margin_left = 35.0
+margin_top = 26.0
+margin_right = 615.0
+margin_bottom = 118.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Grid" type="GridContainer" parent="CenterContainer/UIPanel/AISelectButtons"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+rect_min_size = Vector2( 560, 92 )
+custom_constants/vseparation = -3
+custom_constants/hseparation = 55
+columns = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Moron" type="CheckBox" parent="CenterContainer/UIPanel/AISelectButtons/Grid"]
+margin_right = 127.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 127, 32 )
+custom_styles/focus = SubResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Moron"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tosser" type="CheckBox" parent="CenterContainer/UIPanel/AISelectButtons/Grid"]
+margin_left = 182.0
+margin_right = 309.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 127, 32 )
+custom_styles/focus = SubResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Tosser"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cyborg" type="CheckBox" parent="CenterContainer/UIPanel/AISelectButtons/Grid"]
+margin_left = 364.0
+margin_right = 491.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 127, 32 )
+custom_styles/focus = SubResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Cyborg"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Shooter" type="CheckBox" parent="CenterContainer/UIPanel/AISelectButtons/Grid"]
+margin_top = 29.0
+margin_right = 127.0
+margin_bottom = 61.0
+rect_min_size = Vector2( 127, 32 )
+custom_styles/focus = SubResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Shooter"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Chooser" type="CheckBox" parent="CenterContainer/UIPanel/AISelectButtons/Grid"]
+margin_left = 182.0
+margin_top = 29.0
+margin_right = 309.0
+margin_bottom = 61.0
+rect_min_size = Vector2( 127, 32 )
+custom_styles/focus = SubResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Chooser"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Random" type="CheckBox" parent="CenterContainer/UIPanel/AISelectButtons/Grid"]
+margin_left = 364.0
+margin_top = 29.0
+margin_right = 491.0
+margin_bottom = 61.0
+rect_min_size = Vector2( 127, 32 )
+custom_styles/focus = SubResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Random"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Poolshark" type="CheckBox" parent="CenterContainer/UIPanel/AISelectButtons/Grid"]
+margin_top = 58.0
+margin_right = 127.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 127, 32 )
+custom_styles/focus = SubResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Poolshark"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Spoiler" type="CheckBox" parent="CenterContainer/UIPanel/AISelectButtons/Grid"]
+margin_left = 182.0
+margin_top = 58.0
+margin_right = 309.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 127, 32 )
+custom_styles/focus = SubResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Spoiler"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TankIcons" type="Control" parent="CenterContainer/UIPanel"]
+margin_left = 82.0
+margin_top = 143.0
+margin_right = 82.0
+margin_bottom = 143.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tank1" type="Sprite" parent="CenterContainer/UIPanel/TankIcons" groups=[
+"tankIcons",
+]]
+position = Vector2( 1, 3 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 7 )
+hframes = 7
+
+[node name="Tank2" type="Sprite" parent="CenterContainer/UIPanel/TankIcons" groups=[
+"tankIcons",
+]]
+position = Vector2( 81, 3 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 7 )
+hframes = 7
+frame = 1
+
+[node name="Tank3" type="Sprite" parent="CenterContainer/UIPanel/TankIcons" groups=[
+"tankIcons",
+]]
+position = Vector2( 163, 3 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 7 )
+hframes = 7
+frame = 2
+
+[node name="Tank4" type="Sprite" parent="CenterContainer/UIPanel/TankIcons" groups=[
+"tankIcons",
+]]
+position = Vector2( 243, 3 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 7 )
+hframes = 7
+frame = 3
+
+[node name="Tank5" type="Sprite" parent="CenterContainer/UIPanel/TankIcons" groups=[
+"tankIcons",
+]]
+position = Vector2( 323, 3 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 7 )
+hframes = 7
+frame = 4
+
+[node name="Tank6" type="Sprite" parent="CenterContainer/UIPanel/TankIcons" groups=[
+"tankIcons",
+]]
+position = Vector2( 403, 3 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 7 )
+hframes = 7
+frame = 5
+
+[node name="Tank7" type="Sprite" parent="CenterContainer/UIPanel/TankIcons" groups=[
+"tankIcons",
+]]
+position = Vector2( 484, 3 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 7 )
+hframes = 7
+frame = 6
+
+[node name="TankSelectButtons" type="HBoxContainer" parent="CenterContainer/UIPanel"]
+margin_left = 61.0
+margin_top = 156.0
+margin_right = 589.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 528, 24 )
+custom_constants/separation = 56
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tank1" type="CheckBox" parent="CenterContainer/UIPanel/TankSelectButtons" groups=[
+"selectButtons",
+]]
+margin_left = 12.0
+margin_right = 36.0
+margin_bottom = 24.0
+custom_styles/focus = SubResource( 3 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+group = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tank2" type="CheckBox" parent="CenterContainer/UIPanel/TankSelectButtons" groups=[
+"selectButtons",
+]]
+margin_left = 92.0
+margin_right = 116.0
+margin_bottom = 24.0
+custom_styles/focus = SubResource( 3 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+group = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tank3" type="CheckBox" parent="CenterContainer/UIPanel/TankSelectButtons" groups=[
+"selectButtons",
+]]
+margin_left = 172.0
+margin_right = 196.0
+margin_bottom = 24.0
+custom_styles/focus = SubResource( 3 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+group = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tank4" type="CheckBox" parent="CenterContainer/UIPanel/TankSelectButtons" groups=[
+"selectButtons",
+]]
+margin_left = 252.0
+margin_right = 276.0
+margin_bottom = 24.0
+custom_styles/focus = SubResource( 3 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+group = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tank5" type="CheckBox" parent="CenterContainer/UIPanel/TankSelectButtons" groups=[
+"selectButtons",
+]]
+margin_left = 332.0
+margin_right = 356.0
+margin_bottom = 24.0
+custom_styles/focus = SubResource( 3 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+group = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tank6" type="CheckBox" parent="CenterContainer/UIPanel/TankSelectButtons" groups=[
+"selectButtons",
+]]
+margin_left = 412.0
+margin_right = 436.0
+margin_bottom = 24.0
+custom_styles/focus = SubResource( 3 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+group = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tank7" type="CheckBox" parent="CenterContainer/UIPanel/TankSelectButtons" groups=[
+"selectButtons",
+]]
+margin_left = 492.0
+margin_right = 516.0
+margin_bottom = 24.0
+custom_styles/focus = SubResource( 3 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+group = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AI-PlayerSelectButtons" type="HBoxContainer" parent="CenterContainer/UIPanel"]
+margin_left = 135.0
+margin_top = 202.0
+margin_right = 264.0
+margin_bottom = 226.0
+rect_min_size = Vector2( 129, 24 )
+custom_constants/separation = 56
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AI" type="CheckBox" parent="CenterContainer/UIPanel/AI-PlayerSelectButtons" groups=[
+"selectButtons",
+]]
+margin_left = 12.0
+margin_right = 36.0
+margin_bottom = 24.0
+custom_styles/focus = SubResource( 3 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+group = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" type="CheckBox" parent="CenterContainer/UIPanel/AI-PlayerSelectButtons" groups=[
+"selectButtons",
+]]
+margin_left = 92.0
+margin_right = 116.0
+margin_bottom = 24.0
+custom_styles/focus = SubResource( 3 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+group = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DoneButonLabel" type="Label" parent="CenterContainer/UIPanel"]
+margin_left = 423.0
+margin_top = 192.0
+margin_right = 478.0
+margin_bottom = 216.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.372549, 0.372549, 0.372549, 1 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+text = "Done"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DoneButton" type="TextureButton" parent="CenterContainer/UIPanel"]
+margin_left = 392.0
+margin_top = 190.0
+margin_right = 509.0
+margin_bottom = 220.0
+rect_min_size = Vector2( 117, 30 )
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_down" from="CenterContainer/UIPanel/TankSelectButtons/Tank1" to="." method="_on_TankSelect_toggled" binds= [ 1 ]]
+[connection signal="button_down" from="CenterContainer/UIPanel/TankSelectButtons/Tank2" to="." method="_on_TankSelect_toggled" binds= [ 2 ]]
+[connection signal="button_down" from="CenterContainer/UIPanel/TankSelectButtons/Tank3" to="." method="_on_TankSelect_toggled" binds= [ 3 ]]
+[connection signal="button_down" from="CenterContainer/UIPanel/TankSelectButtons/Tank4" to="." method="_on_TankSelect_toggled" binds= [ 4 ]]
+[connection signal="button_down" from="CenterContainer/UIPanel/TankSelectButtons/Tank5" to="." method="_on_TankSelect_toggled" binds= [ 5 ]]
+[connection signal="button_down" from="CenterContainer/UIPanel/TankSelectButtons/Tank6" to="." method="_on_TankSelect_toggled" binds= [ 6 ]]
+[connection signal="button_down" from="CenterContainer/UIPanel/TankSelectButtons/Tank7" to="." method="_on_TankSelect_toggled" binds= [ 7 ]]
+[connection signal="button_down" from="CenterContainer/UIPanel/AI-PlayerSelectButtons/AI" to="." method="_on_Controller_button_down" binds= [ "AI" ]]
+[connection signal="button_down" from="CenterContainer/UIPanel/AI-PlayerSelectButtons/Player" to="." method="_on_Controller_button_down" binds= [ "Player" ]]
+[connection signal="pressed" from="CenterContainer/UIPanel/DoneButton" to="." method="_on_DoneButton_pressed"]

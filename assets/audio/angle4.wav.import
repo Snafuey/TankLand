@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/angle4.wav-014f3150d9edb24b5259b1f88c67af32.sample"
+
+[deps]
+
+source_file="res://assets/audio/angle4.wav"
+dest_files=[ "res://.import/angle4.wav-014f3150d9edb24b5259b1f88c67af32.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

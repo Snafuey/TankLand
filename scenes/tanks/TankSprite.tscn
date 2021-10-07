@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/effects/MuzzleFlash.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/sprites/Tank1.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/TankBarrel.png" type="Texture" id=3]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.387387, 1 )
+colors = PoolColorArray( 0.953613, 0.00372505, 0.00372505, 1, 0.906738, 0.486132, 0, 1, 0.996582, 0.978091, 0, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+lifetime_randomness = 0.5
+flag_disable_z = true
+spread = 50.0
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 50.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 50.0
+linear_accel_random = 1.0
+color_ramp = SubResource( 2 )
+
+[node name="TankSprite" type="Sprite"]
+position = Vector2( 0, -3.5 )
+texture = ExtResource( 2 )
+
+[node name="Barrel" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 0, -0.5 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 9, 1 )
+
+[node name="Muzzle" type="Position2D" parent="Barrel"]
+position = Vector2( 9, 0 )
+__meta__ = {
+"_gizmo_extents_": 2.0
+}
+
+[node name="MuzzleFlash" parent="Barrel" instance=ExtResource( 1 )]
+process_material = SubResource( 3 )
