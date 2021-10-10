@@ -7,18 +7,7 @@ onready var topWall: CollisionShape2D = $Top/CollisionShape2D
 onready var bottomWall: CollisionShape2D = $Bottom/CollisionShape2D
 
 func _ready() -> void:
-	var battleMain: Node = get_parent()
-	battleMain.connect("walls_changed", self, "set_walls") # warning-ignore:return_value_discarded
-
-
-func get_random_wall_type() -> String:
-	randomize()
-	var walls_list: Array = GameData.game_settings["Walls"]
-	walls_list.erase("Random")
-	var rand_index: int = round(rand_range(0 , walls_list.size()))# warning-ignore:narrowing_conversion
-	var rand_wall: String = walls_list[rand_index]
-	return rand_wall
-
+	Events.connect("battleMain_walls_changed", self, "set_walls")
 
 func set_walls(type: String) -> void:
 	match type:
@@ -43,3 +32,10 @@ func set_walls(type: String) -> void:
 		"Random":
 			var rand_wall: String = get_random_wall_type()
 			set_walls(rand_wall)
+
+func get_random_wall_type() -> String:
+	var walls_list: Array = GameData.game_settings["Walls"]
+	walls_list.erase("Random")
+	var rand_index: int = Utils.get_random_index_range(0 , walls_list.size())
+	var rand_wall: String = walls_list[rand_index]
+	return rand_wall

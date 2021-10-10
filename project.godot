@@ -9,25 +9,19 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "RigidBody2D",
-"class": "Bullet",
-"language": "GDScript",
-"path": "res://scripts/Bullet.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "Tank",
-"language": "GDScript",
-"path": "res://scripts/Tank.gd"
-}, {
 "base": "Node",
-"class": "TurnQueue",
+"class": "SoundManager",
 "language": "GDScript",
-"path": "res://scripts/TurnQueue.gd"
+"path": "res://scripts/GameSoundManager.gd"
+}, {
+"base": "Reference",
+"class": "TankData",
+"language": "GDScript",
+"path": "res://scripts/TankData.gd"
 } ]
 _global_script_class_icons={
-"Bullet": "",
-"Tank": "",
-"TurnQueue": ""
+"SoundManager": "",
+"TankData": ""
 }
 
 [application]
@@ -43,6 +37,8 @@ default_bus_layout="res://assets/audio/default_bus_layout.tres"
 [autoload]
 
 GameData="*res://scripts/GameData.gd"
+Utils="*res://scripts/Utils.gd"
+Events="*res://scripts/Events.gd"
 
 [display]
 

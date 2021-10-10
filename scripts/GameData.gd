@@ -1,5 +1,14 @@
 extends Node
 
+enum GAME_STATES {
+	MAIN_MENU,
+	OPTIONS_MENU,
+	TANK_CREATION,
+	BATTLE,
+	ROUND_RANKING,
+	PAUSE,
+	FINAL_SCORE }
+
 var earth_colors: Dictionary = {
 	"Sand": Color.peru,
 	"Grass": Color.darkgreen,
@@ -16,7 +25,7 @@ var tank_colors: Dictionary = {
 	"Pink": Color.maroon }
 
 var game_settings: Dictionary = {
-	"Players": 2,
+	"NumOfTanks": 2,
 	"Rounds": 10,
 	"Walls": ["Static", "Bounce", "Wrap", "Random"],
 	"CurrentWalls": "Bounce",
@@ -28,7 +37,7 @@ var money_table: Dictionary = {
 	"Kill": 1000,
 	"Suicied": -1500 }
 
-var player_data: Dictionary = {}
+var tank_data: Dictionary = {}
 #																"Player1": {
 #																	"Name": "Kurt",
 #																	"Color": Color.darkred,
@@ -78,50 +87,20 @@ var battle_music: Array = ["res://assets/audio/battle-music-1.wav",
 													"res://assets/audio/battle-music-2.wav",
 													"res://assets/audio/battle-music-3.wav"]
 
-static func sort_decending(a, b) -> bool:
-	if a[0] > b[0]:
-		return true
-	return false
 
-func get_player_slot(tank_name: String) -> String:
-	var player_slot = tank_name.split("-")
-	return player_slot[0]
+func new_round_set_tank_data() -> void:
+	for i in game_settings["NumOfTanks"]:
+		tank_data["Player" + str(i + 1)]["Suicied"] = 0
+		tank_data["Player" + str(i + 1)]["Kills"] = 0
 
-func get_full_tank_name(player_slot: String) -> String:
-	var player_name = player_slot + "-" + player_data[player_slot]["Name"]
-	return player_name
+func replay_game_set_tank_data() -> void:
+	for i in game_settings["NumOfTanks"]:
+		tank_data["Player" + str(i + 1)]["Money"] = 0
+		tank_data["Player" + str(i + 1)]["Earnings"] = 0
+		tank_data["Player" + str(i + 1)]["Kills"] = 0
+		tank_data["Player" + str(i + 1)]["TotalKills"] = 0
+		tank_data["Player" + str(i + 1)]["Suicide"] = 0
 
-func new_round_clear_data() -> void:
-	for i in game_settings["Players"]:
-		player_data["Player" + str(i + 1)]["Suicied"] = 0
-		player_data["Player" + str(i + 1)]["Kills"] = 0
-
-func restart_game_clear_data() -> void:
-	for i in game_settings["Players"]:
-		player_data["Player" + str(i + 1)]["Money"] = 0
-		player_data["Player" + str(i + 1)]["Earnings"] = 0
-		player_data["Player" + str(i + 1)]["Kills"] = 0
-		player_data["Player" + str(i + 1)]["TotalKills"] = 0
-		player_data["Player" + str(i + 1)]["Suicide"] = 0
-
-func new_game_clear_data() -> void:
-	player_data = {}
+func clear_tank_data() -> void:
+	tank_data = {}
 		
-func build_ranks_by_type(by_type: String) -> Array:
-	var ranks: Array = []
-	for i in game_settings["Players"]:
-		var value: int = player_data["Player" + str(i + 1)][by_type]
-		var player_slot: String = "Player" + str(i + 1)
-		ranks.append([value, player_slot])
-	ranks.sort_custom(self, "sort_decending")
-	return ranks
-
-func get_random_spawn_index(index: int) -> int:
-	randomize()
-	var new_index: int = round(index + rand_range(-9 , 9)) # warning-ignore:narrowing_conversion
-	return new_index
-
-static func get_random_index_range(start: int, end: int) -> int:
-	randomize()
-	var new_index: int = round(rand_range(start, end))
-	return new_index

@@ -1,11 +1,8 @@
 extends Control
 
-const MAIN_MENU:String = "res://scenes/menus/MainMenu.tscn"
-const BATTLE_FIELD:String = "res://scenes/level/BattleField.tscn"
-
 onready var rankLines = $CenterContainer/UIPanel/RankLines
 onready var sortOptions = $CenterContainer/UIPanel/SortOptions
-onready var sceneManager = find_parent("GameMain")
+onready var GameMain: Node2D = find_parent("GameMain")
 
 var player_ranks: Array = []
 var sort_is_total: bool = true
@@ -15,12 +12,12 @@ func _ready() -> void:
 
 
 func _on_NewGameButton_pressed() -> void:
-	GameData.new_game_clear_data()
-	sceneManager.transition_scene(MAIN_MENU)
+	GameMain.state = GameData.GAME_STATES.MAIN_MENU
+	self.queue_free()
 
 func _on_ReplayButton_pressed() -> void:
-	GameData.restart_game_clear_data()
-	sceneManager.transition_scene(BATTLE_FIELD)
+	GameMain.state = GameData.GAME_STATES.BATTLE
+	self.queue_free()
 
 func _on_QuitButton_pressed() -> void:
 	get_tree().quit()
@@ -42,7 +39,6 @@ func _on_SortOptions_item_selected(index: int) -> void:
 			set_rank_data()
 
 func init_scores() -> void:
-	yield(get_tree(),"idle_frame")
 	add_sort_items()
 	hide_lines_unused()
 	build_ranks("Earnings")
@@ -54,7 +50,7 @@ func add_sort_items() -> void:
 	sortOptions.add_item(" Last Round")
 
 func hide_lines_unused() -> void:
-	var hide_total = 7 - GameData.game_settings["Players"]
+	var hide_total = 7 - GameData.game_settings["NumOfTanks"]
 	var hide_index = (7 - hide_total) - 1
 	var rankLine = rankLines.get_children()
 	for i in hide_total:
@@ -62,10 +58,11 @@ func hide_lines_unused() -> void:
 		rankLine[hide_index].visible = false
 
 func build_ranks(type: String) -> void:
-	player_ranks = GameData.build_ranks_by_type(type)
+	player_ranks = Utils.get_tank_data_by_type(type)
+	player_ranks.sort_custom(Utils, "sort_decending")
 
 func set_rank_data() -> void:
-	var total_players: int = GameData.game_settings["Players"]
+	var total_players: int = GameData.game_settings["NumOfTanks"]
 	for i in total_players:
 			var lineStats = get_node("CenterContainer/UIPanel/RankLines/" + str(i + 1)).get_children()
 			for j in lineStats.size():
@@ -74,11 +71,11 @@ func set_rank_data() -> void:
 					0:
 						pass
 					1:
-						stat.text = GameData.player_data[player_ranks[i][1]]["Name"]
+						stat.text = GameData.tank_data[player_ranks[i][1]]["Name"]
 					2:
 						if sort_is_total:
-							stat.text = str(GameData.player_data[player_ranks[i][1]]["TotalKills"])
+							stat.text = str(GameData.tank_data[player_ranks[i][1]]["TotalKills"])
 						else:
-							stat.text = str(GameData.player_data[player_ranks[i][1]]["Kills"])
+							stat.text = str(GameData.tank_data[player_ranks[i][1]]["Kills"])
 					3:
-						stat.text = "$" + str(GameData.player_data[player_ranks[i][1]]["Earnings"])
+						stat.text = "$" + str(GameData.tank_data[player_ranks[i][1]]["Earnings"])

@@ -1,4 +1,3 @@
-class_name Bullet
 extends RigidBody2D
 
 signal bullet_finished()
@@ -16,15 +15,15 @@ func _ready() -> void:
 	screensize = get_viewport_rect().size
 
 
-func _on_Bullet_body_entered(body: Node) -> void:
+func _on_Bullet_body_entered(body: PhysicsBody2D) -> void:
 	if body.is_in_group("tank"):
 		body.current_health -= damage
 		spawn_explosion()
 		bullet_finsihed()
 	if body.is_in_group("terrainCollision"):
-		var terrainPoly: Node = get_parent().get_node("Terrain")
-		body.destroy_terrain(self.global_position, radius)
-		terrainPoly.destroy_terrain(self.global_position, radius)
+#		var terrainPoly: Node = get_parent().get_node("Terrain")
+		body.get_parent().destroy_terrain(self.global_position, radius)
+#		terrainPoly.destroy_terrain(self.global_position, radius)
 		spawn_explosion()
 		bullet_finsihed()
 	if body.is_in_group("walls"):

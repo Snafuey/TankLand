@@ -11,7 +11,7 @@ onready var doneButton: TextureButton = $CenterContainer/UIPanel/DoneButton
 
 var colors: Array = GameData.tank_colors.keys()
 var color_index: int = 0
-var player_total: int = GameData.game_settings["Players"]
+var num_of_tanks: int = GameData.game_settings["NumOfTanks"]
 var current_player: int = 1
 var selected_tank: String
 var controller: String
@@ -47,7 +47,7 @@ func _on_DoneButton_pressed() -> void:
 
 		
 func set_player_data() -> void:
-	GameData.player_data["Player" + str(current_player)] = {
+	GameData.tank_data["Player" + str(current_player)] = {
 		"Name": nameInput.text,
 		"Color": GameData.tank_colors[colors[color_index]],
 		"Tank": selected_tank,
@@ -57,16 +57,13 @@ func set_player_data() -> void:
 		"Kills": 0,
 		"Suicide": 0,
 		"TotalKills": 0 }
-	if current_player < player_total:
+	if current_player < num_of_tanks:
 		current_player += 1
 		color_index += 1
 		next_player_reset()
 	else:
-		var sceneManager: Node2D = find_parent("GameMain")
-		var rng_index: int = GameData.get_random_index_range(0, (GameData.battle_music.size() - 1))
-		sceneManager.music_transition(load(GameData.battle_music[rng_index]), -30 , 2)
-		sceneManager.transition_scene(BATTLEFIELD)
-	
+		Events.emit_signal("change_game_state", GameData.GAME_STATES.BATTLE)
+
 
 func next_player_reset() -> void:
 	var buttons = get_tree().get_nodes_in_group("selectButtons")
@@ -86,5 +83,5 @@ func set_colors() -> void:
 
 
 func set_title_text() -> void:
-	title.text = "Player " + str(current_player) + " (of " + str(player_total) + ")"
+	title.text = "Player " + str(current_player) + " (of " + str(num_of_tanks) + ")"
 	
