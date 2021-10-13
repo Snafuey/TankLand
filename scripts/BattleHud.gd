@@ -13,10 +13,10 @@ func _ready() -> void:
 	Events.connect("tank_power_changed", self, "change_power")
 	Events.connect("tank_health_changed", self, "change_health")
 
-func new_tank_active(power: int, angle: float, health: int, tank: KinematicBody2D) -> void:
-	change_power(power)
-	change_angle(angle)
-	change_health(health)
+func new_tank_active(_power: int, _angle: float, _health: int, tank: KinematicBody2D) -> void:
+	change_power(_power)
+	change_angle(_angle)
+	change_health(_health)
 	change_name(tank)
 
 func change_power(value: int) -> void:

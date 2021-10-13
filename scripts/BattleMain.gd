@@ -40,6 +40,7 @@ func turnQueue_tanks_ready() -> void:
 
 func set_walls(type: String) -> void:
 	current_walls = type
+	GameData.game_settings["CurrentWalls"] = type
 	walls.set_walls(current_walls)
 
 func set_current_round(value: int) -> void:

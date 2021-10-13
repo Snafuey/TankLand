@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/effects/MuzzleFlash.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sprites/Tank1.png" type="Texture" id=2]
@@ -24,6 +24,10 @@ linear_accel = 50.0
 linear_accel_random = 1.0
 color_ramp = SubResource( 2 )
 
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0.207143, 0.457143, 0.707143 )
+colors = PoolColorArray( 0.980469, 0.0229797, 0.0229797, 1, 0.960938, 0.698181, 0, 1, 0.0322971, 0.921875, 0.00360107, 1 )
+
 [node name="TankSprite" type="Sprite"]
 position = Vector2( 0, -3.5 )
 texture = ExtResource( 2 )
@@ -43,3 +47,8 @@ __meta__ = {
 
 [node name="MuzzleFlash" parent="Barrel" instance=ExtResource( 1 )]
 process_material = SubResource( 3 )
+
+[node name="TrajectoryLine" type="Line2D" parent="Barrel"]
+width = 1.0
+default_color = Color( 0.4, 0.501961, 1, 1 )
+gradient = SubResource( 4 )

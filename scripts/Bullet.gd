@@ -7,8 +7,6 @@ const SMALL_EXPLOSION = preload("res://scenes/effects/SmallExplosion.tscn")
 export var radius: int = 20
 export var damage: int = 100
 
-#onready var terrainPoly = get_parent().get_node("Terrain")
-
 var screensize: Vector2
 
 func _ready() -> void:
@@ -21,9 +19,7 @@ func _on_Bullet_body_entered(body: PhysicsBody2D) -> void:
 		spawn_explosion()
 		bullet_finsihed()
 	if body.is_in_group("terrainCollision"):
-#		var terrainPoly: Node = get_parent().get_node("Terrain")
 		body.get_parent().destroy_terrain(self.global_position, radius)
-#		terrainPoly.destroy_terrain(self.global_position, radius)
 		spawn_explosion()
 		bullet_finsihed()
 	if body.is_in_group("walls"):

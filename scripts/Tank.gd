@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const BULLET = preload("res://scenes/projectiles/Bullet.tscn")
+const PROJECTILE = preload("res://scenes/projectiles/Projectile.tscn")
 const SHOOT_SFX = preload("res://assets/audio/heavy-artillery-shot.wav")
 
 onready var tankSprite: Sprite = $TankSprite
@@ -8,9 +8,9 @@ onready var barrel: Sprite = $TankSprite/Barrel
 onready var muzzel: Position2D = $TankSprite/Barrel/Muzzle
 onready var muzzelFlash: Particles2D = $TankSprite/Barrel/MuzzleFlash
 onready var tankSFX: AudioStreamPlayer = $TankSFX
+onready var line: Line2D = $TankSprite/Barrel/TrajectoryLine
 
 var tank_color: Color
-var gravity: float = 9.8
 var velocity: Vector2 = Vector2.ZERO
 
 var power: int = 1 setget set_power
@@ -34,26 +34,43 @@ func _ready() -> void:
 	self.power = 200
 	self.angle = -32.0
 
-
+var max_points: int = 300
+func _process(delta: float) -> void:
+	if is_active:
+		line.visible = true
+		line.set_as_toplevel(true)
+		line.clear_points()
+		var angle_rad: float = deg2rad(angle)
+		var pos: Vector2 = muzzel.global_position
+		var vel: Vector2 = Vector2(cos(angle_rad), sin(angle_rad)) * power
+		for i in max_points:
+			line.add_point(pos)
+			vel.y += GameData.GRAVITY * delta
+			pos += vel * delta
+	else:
+		line.visible = false
+		
 func _physics_process(delta: float) -> void:
 	var collision: KinematicCollision2D
 	collision = move_and_collide(velocity * delta, false)
 	if collision:
 		velocity.y = 0
 	else:
-		velocity.y += gravity
+		velocity.y += GameData.GRAVITY * delta
 	barrel.rotation_degrees = angle
 
 func shoot() -> void:
 	var angle_rad: float = deg2rad(angle)
-	var bullet = BULLET.instance()
-	bullet.connect("bullet_finished", self, "finish_turn")
-	bullet.global_position = muzzel.global_position
-	find_parent("BattleField").add_child(bullet)
-	bullet.apply_central_impulse(Vector2(cos(angle_rad), sin(angle_rad)) * power)
+	var projectile = PROJECTILE.instance()
+	projectile.connect("bullet_finished", self, "finish_turn")
+	projectile.global_position = muzzel.global_position
+	find_parent("BattleField").add_child(projectile)
+	projectile.init_projectile(Vector2(cos(angle_rad), sin(angle_rad)) * power)
+	
 	muzzelFlash.emitting = true
 	tankSFX.set_stream(SHOOT_SFX)
 	tankSFX.play()
+
 
 func set_as_active(value: bool) -> void:
 	is_active = value

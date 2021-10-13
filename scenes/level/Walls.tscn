@@ -25,7 +25,7 @@ width = 1.0
 [node name="Left" type="StaticBody2D" parent="." groups=[
 "walls",
 ]]
-position = Vector2( -12, 270 )
+position = Vector2( -20, 270 )
 collision_layer = 8
 collision_mask = 0
 
@@ -35,7 +35,7 @@ shape = SubResource( 1 )
 [node name="Right" type="StaticBody2D" parent="." groups=[
 "walls",
 ]]
-position = Vector2( 972, 270 )
+position = Vector2( 980, 270 )
 collision_layer = 8
 collision_mask = 0
 
@@ -45,7 +45,7 @@ shape = SubResource( 2 )
 [node name="Top" type="StaticBody2D" parent="." groups=[
 "walls",
 ]]
-position = Vector2( 480, 28 )
+position = Vector2( 480, 20 )
 collision_layer = 8
 collision_mask = 0
 
@@ -55,7 +55,7 @@ shape = SubResource( 3 )
 [node name="Bottom" type="StaticBody2D" parent="." groups=[
 "walls",
 ]]
-position = Vector2( 480, 556 )
+position = Vector2( 480, 560 )
 collision_layer = 8
 collision_mask = 0
 

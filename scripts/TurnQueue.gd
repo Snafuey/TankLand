@@ -46,7 +46,6 @@ func set_next_turn() -> void:
 	active_tank.is_active = false
 	var child_count: int = get_child_count()
 	var new_tank: int = (active_tank.get_index() + 1) % child_count
-	print(new_tank)
 	active_tank = get_child(new_tank)
 	active_tank.is_active = true
 	
@@ -61,7 +60,8 @@ func check_for_winner() -> bool:
 	return has_winner
 
 func end_round() -> void:
-	active_tank.is_active = false
+	if active_tank:
+		active_tank.is_active = false
 	var last_tank: KinematicBody2D = get_child(0)
 	if last_tank != null:
 		Events.emit_signal("turnQueue_round_finished", last_tank)
@@ -72,15 +72,4 @@ func get_active_tank_name() -> String:
 	return active_tank.name
 
 
-#func make_tank_signal_connections(tank: KinematicBody2D) -> void:
-#	if not tank.is_connected("power_changed", battleFieldHud, "change_power"):
-#		tank.connect("power_changed", battleFieldHud, "change_power") 
-#	if not tank.is_connected("angle_changed", battleFieldHud, "change_angle"):
-#		tank.connect("angle_changed", battleFieldHud, "change_angle") 
-#	if not tank.is_connected("health_changed", battleFieldHud, "change_health"):
-#		tank.connect("health_changed", battleFieldHud, "change_health") 
-#	if not tank.is_connected("new_turn_hud_change", battleFieldHud, "new_turn"):
-#		tank.connect("new_turn_hud_change", battleFieldHud, "new_turn") 
-#	if not tank.is_connected("tank_killed", battleField, "apply_kill"):
-#		tank.connect("tank_killed", battleField, "apply_kill")
 	

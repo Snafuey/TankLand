@@ -1,5 +1,7 @@
 extends Node
 
+const GRAVITY = 118
+
 enum GAME_STATES {
 	MAIN_MENU,
 	OPTIONS_MENU,

@@ -56,7 +56,6 @@ animations = [ {
 scale = Vector2( 1.25, 1.25 )
 frames = SubResource( 11 )
 animation = "animate"
-frame = 9
 script = ExtResource( 1 )
 
 [node name="SFXExplosion" type="AudioStreamPlayer" parent="."]
