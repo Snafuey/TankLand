@@ -55,6 +55,7 @@ func set_game_state(new_state: int) -> void:
 				GameData.GAME_STATES.FINAL_SCORE:
 					GameData.replay_game_set_tank_data()
 					var battleMain: Node = currentScene.get_child(0)
+					battleMain.current_round = 1
 					battleMain.init_new_battle()
 					return
 				_:

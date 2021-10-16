@@ -34,21 +34,21 @@ func _ready() -> void:
 	self.power = 200
 	self.angle = -32.0
 
-var max_points: int = 300
-func _process(delta: float) -> void:
-	if is_active:
-		line.visible = true
-		line.set_as_toplevel(true)
-		line.clear_points()
-		var angle_rad: float = deg2rad(angle)
-		var pos: Vector2 = muzzel.global_position
-		var vel: Vector2 = Vector2(cos(angle_rad), sin(angle_rad)) * power
-		for i in max_points:
-			line.add_point(pos)
-			vel.y += GameData.GRAVITY * delta
-			pos += vel * delta
-	else:
-		line.visible = false
+#var max_points: int = 300
+#func _process(delta: float) -> void:
+#	if is_active:
+#		line.visible = true
+#		line.set_as_toplevel(true)
+#		line.clear_points()
+#		var angle_rad: float = deg2rad(angle)
+#		var pos: Vector2 = muzzel.global_position
+#		var vel: Vector2 = Vector2(cos(angle_rad), sin(angle_rad)) * power
+#		for i in max_points:
+#			line.add_point(pos)
+#			vel.y += GameData.GRAVITY * delta
+#			pos += vel * delta
+#	else:
+#		line.visible = false
 		
 func _physics_process(delta: float) -> void:
 	var collision: KinematicCollision2D

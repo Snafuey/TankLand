@@ -73,7 +73,7 @@ func end_round(tank: KinematicBody2D) -> void:
 		GameData.tank_data[tank_slot]["Money"] += GameData.money_table["Win"]
 		GameData.tank_data[tank_slot]["Earnings"] += GameData.money_table["Win"]
 	if current_round == total_rounds:
-		current_round += 1
+		self.current_round += 1
 		return
 	Events.emit_signal("change_game_state", GameData.GAME_STATES.ROUND_RANKING)
 

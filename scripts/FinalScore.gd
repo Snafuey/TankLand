@@ -12,10 +12,12 @@ func _ready() -> void:
 
 
 func _on_NewGameButton_pressed() -> void:
+	GameData.clear_tank_data()
 	GameMain.state = GameData.GAME_STATES.MAIN_MENU
 	self.queue_free()
 
 func _on_ReplayButton_pressed() -> void:
+	GameData.replay_game_set_tank_data()
 	GameMain.state = GameData.GAME_STATES.BATTLE
 	self.queue_free()
 

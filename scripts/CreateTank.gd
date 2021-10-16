@@ -24,7 +24,8 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if selected_tank != "" and controller != "" and !nameInput.text.empty():
+	if selected_tank != "" and controller != "" and !nameInput.text.empty() \
+			and nameInput.text != "Name taken":
 		doneButtonLabel.set("custom_colors/font_color", Color(0, 0, 0))
 		doneButtonLabel.set("custom_colors/font_color_shadow", Color(1, 1, 1))
 		doneButton.disabled = false
@@ -43,9 +44,14 @@ func _on_Controller_button_down(type: String) -> void:
 
 
 func _on_DoneButton_pressed() -> void:
+	var keys: Array = GameData.tank_data.keys()
+	for i in keys.size():
+		if nameInput.text == GameData.tank_data["Player" + str(i +1)]["Name"]:
+			nameInput.text = "Name taken"
+			return
 	set_player_data()
 
-		
+
 func set_player_data() -> void:
 	GameData.tank_data["Player" + str(current_player)] = {
 		"Name": nameInput.text,

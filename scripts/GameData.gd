@@ -30,7 +30,7 @@ var game_settings: Dictionary = {
 	"NumOfTanks": 2,
 	"Rounds": 10,
 	"Walls": ["Static", "Bounce", "Wrap", "Random"],
-	"CurrentWalls": "Bounce",
+	"CurrentWalls": "Wrap",
 	"MoneyAmounts": [0, 5000, 10000, 50000, 100000],
 	"StartingMoney": 0 }
 
