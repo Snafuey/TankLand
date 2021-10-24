@@ -60,8 +60,6 @@ func check_for_winner() -> bool:
 	return has_winner
 
 func end_round() -> void:
-	if active_tank:
-		active_tank.is_active = false
 	var last_tank: KinematicBody2D = get_child(0)
 	if last_tank != null:
 		Events.emit_signal("turnQueue_round_finished", last_tank)
@@ -70,6 +68,3 @@ func end_round() -> void:
 
 func get_active_tank_name() -> String:
 	return active_tank.name
-
-
-	

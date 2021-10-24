@@ -23,15 +23,15 @@ func set_values() -> void:
 	GameData.game_settings["Rounds"] = rounds
 
 
-func _on_StartButton_button_down() -> void:
+func _on_StartButton_pressed() -> void:
 	Events.emit_signal("change_game_state", GameData.GAME_STATES.TANK_CREATION)
+
 
 func _on_PlayersUpButton_button_down() -> void:
 	num_of_tanks += 1
 	num_of_tanks = clamp(num_of_tanks, 2, 7) # warning-ignore:narrowing_conversion
 	set_values()
 	
-
 func _on_PlayersDownButton_button_down() -> void:
 	num_of_tanks -= 1
 	num_of_tanks = clamp(num_of_tanks, 2, 7) # warning-ignore:narrowing_conversion

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/sprites/Tank Creation Menu.png" type="Texture" id=1]
 [ext_resource path="res://assets/fonts/RobotoBold18.tres" type="DynamicFont" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://resources/PlayerAIButtonGroup.tres" type="ButtonGroup" id=5]
 [ext_resource path="res://resources/TankSelectButtonGroup.tres" type="ButtonGroup" id=6]
 [ext_resource path="res://assets/sprites/Tank Creation Icons.png" type="Texture" id=7]
+[ext_resource path="res://scenes/menus/MenuButton.tscn" type="PackedScene" id=8]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -442,31 +443,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="DoneButonLabel" type="Label" parent="CenterContainer/UIPanel"]
-margin_left = 423.0
-margin_top = 192.0
-margin_right = 478.0
-margin_bottom = 216.0
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color = Color( 0.372549, 0.372549, 0.372549, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
-text = "Done"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="DoneButton" type="TextureButton" parent="CenterContainer/UIPanel"]
+[node name="DoneButton" parent="CenterContainer/UIPanel" instance=ExtResource( 8 )]
 margin_left = 392.0
 margin_top = 190.0
 margin_right = 509.0
 margin_bottom = 220.0
 rect_min_size = Vector2( 117, 30 )
-disabled = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="Label" parent="CenterContainer/UIPanel/DoneButton" index="1"]
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.37, 0.37, 0.37, 1 )
+text = "Done"
 
 [connection signal="button_down" from="CenterContainer/UIPanel/TankSelectButtons/Tank1" to="." method="_on_TankSelect_toggled" binds= [ 1 ]]
 [connection signal="button_down" from="CenterContainer/UIPanel/TankSelectButtons/Tank2" to="." method="_on_TankSelect_toggled" binds= [ 2 ]]
@@ -477,4 +464,6 @@ __meta__ = {
 [connection signal="button_down" from="CenterContainer/UIPanel/TankSelectButtons/Tank7" to="." method="_on_TankSelect_toggled" binds= [ 7 ]]
 [connection signal="button_down" from="CenterContainer/UIPanel/AI-PlayerSelectButtons/AI" to="." method="_on_Controller_button_down" binds= [ "AI" ]]
 [connection signal="button_down" from="CenterContainer/UIPanel/AI-PlayerSelectButtons/Player" to="." method="_on_Controller_button_down" binds= [ "Player" ]]
-[connection signal="pressed" from="CenterContainer/UIPanel/DoneButton" to="." method="_on_DoneButton_pressed"]
+[connection signal="pressed" from="CenterContainer/UIPanel/DoneButton/Button" to="." method="_on_DoneButton_pressed"]
+
+[editable path="CenterContainer/UIPanel/DoneButton"]

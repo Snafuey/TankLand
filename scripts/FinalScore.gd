@@ -2,7 +2,6 @@ extends Control
 
 onready var rankLines = $CenterContainer/UIPanel/RankLines
 onready var sortOptions = $CenterContainer/UIPanel/SortOptions
-onready var GameMain: Node2D = find_parent("GameMain")
 
 var player_ranks: Array = []
 var sort_is_total: bool = true
@@ -13,12 +12,12 @@ func _ready() -> void:
 
 func _on_NewGameButton_pressed() -> void:
 	GameData.clear_tank_data()
-	GameMain.state = GameData.GAME_STATES.MAIN_MENU
+	Events.emit_signal("change_game_state", GameData.GAME_STATES.MAIN_MENU)
 	self.queue_free()
 
 func _on_ReplayButton_pressed() -> void:
 	GameData.replay_game_set_tank_data()
-	GameMain.state = GameData.GAME_STATES.BATTLE
+	Events.emit_signal("change_game_state", GameData.GAME_STATES.BATTLE)
 	self.queue_free()
 
 func _on_QuitButton_pressed() -> void:

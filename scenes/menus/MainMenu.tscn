@@ -1,6 +1,5 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://assets/sprites/Main Menu Button1.png" type="Texture" id=1]
 [ext_resource path="res://assets/sprites/Main Menu Background.png" type="Texture" id=2]
 [ext_resource path="res://assets/sprites/Main Menu Button Container.png" type="Texture" id=3]
 [ext_resource path="res://assets/fonts/RobotoBold24.tres" type="DynamicFont" id=4]
@@ -9,7 +8,7 @@
 [ext_resource path="res://assets/sprites/Arrow Down Button1.png" type="Texture" id=7]
 [ext_resource path="res://assets/sprites/Arrow Down Button2.png" type="Texture" id=8]
 [ext_resource path="res://scripts/MainMenu.gd" type="Script" id=9]
-[ext_resource path="res://assets/sprites/Main Menu Button2.png" type="Texture" id=10]
+[ext_resource path="res://scenes/menus/MenuButton.tscn" type="PackedScene" id=11]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -45,39 +44,17 @@ __meta__ = {
 
 [node name="VBox" type="VBoxContainer" parent="HBox/ButtonContainerRect/MarginContainer"]
 margin_right = 198.0
-margin_bottom = 506.0
+margin_bottom = 567.0
 custom_constants/separation = 13
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StartButton" type="TextureButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox"]
-margin_right = 198.0
-margin_bottom = 48.0
+[node name="StartButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox" instance=ExtResource( 11 )]
 rect_min_size = Vector2( 198, 48 )
-texture_normal = ExtResource( 1 )
-texture_pressed = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Center" type="CenterContainer" parent="HBox/ButtonContainerRect/MarginContainer/VBox/StartButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="StartLabel" type="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/StartButton/Center"]
-margin_left = 64.0
-margin_top = 7.0
-margin_right = 134.0
-margin_bottom = 40.0
+[node name="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/StartButton" index="1"]
 custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 text = "START"
 
 [node name="PlayersHBox" type="HBoxContainer" parent="HBox/ButtonContainerRect/MarginContainer/VBox"]
@@ -146,184 +123,58 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 text = "Rounds:10"
 
-[node name="Weapons" type="TextureButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox"]
+[node name="WeaponsButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox" instance=ExtResource( 11 )]
 margin_top = 153.0
-margin_right = 198.0
 margin_bottom = 201.0
 rect_min_size = Vector2( 198, 48 )
-texture_normal = ExtResource( 1 )
-texture_pressed = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Center" type="CenterContainer" parent="HBox/ButtonContainerRect/MarginContainer/VBox/Weapons"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="WeaponsLabel" type="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/Weapons/Center"]
-margin_left = 50.0
-margin_top = 7.0
-margin_right = 148.0
-margin_bottom = 40.0
+[node name="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/WeaponsButton" index="1"]
 custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 text = "Weapons"
 
-[node name="EconButton" type="TextureButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox"]
+[node name="EconButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox" instance=ExtResource( 11 )]
 margin_top = 214.0
-margin_right = 198.0
 margin_bottom = 262.0
 rect_min_size = Vector2( 198, 48 )
-texture_normal = ExtResource( 1 )
-texture_pressed = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Center" type="CenterContainer" parent="HBox/ButtonContainerRect/MarginContainer/VBox/EconButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="EconLabel" type="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/EconButton/Center"]
-margin_left = 36.0
-margin_top = 7.0
-margin_right = 162.0
-margin_bottom = 40.0
+[node name="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/EconButton" index="1"]
 custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 text = "Economics"
 
-[node name="PhysicsButton" type="TextureButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox"]
+[node name="PhysicsButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox" instance=ExtResource( 11 )]
 margin_top = 275.0
-margin_right = 198.0
 margin_bottom = 323.0
 rect_min_size = Vector2( 198, 48 )
-texture_normal = ExtResource( 1 )
-texture_pressed = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Center" type="CenterContainer" parent="HBox/ButtonContainerRect/MarginContainer/VBox/PhysicsButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PhysicsLabel" type="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/PhysicsButton/Center"]
-margin_left = 50.0
-margin_top = 7.0
-margin_right = 148.0
-margin_bottom = 40.0
+[node name="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/PhysicsButton" index="1"]
 custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 text = "Physics"
 
-[node name="LandscapeButton" type="TextureButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox"]
+[node name="LandscapeButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox" instance=ExtResource( 11 )]
 margin_top = 336.0
-margin_right = 198.0
 margin_bottom = 384.0
 rect_min_size = Vector2( 198, 48 )
-texture_normal = ExtResource( 1 )
-texture_pressed = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Center" type="CenterContainer" parent="HBox/ButtonContainerRect/MarginContainer/VBox/LandscapeButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="LandscapeLabel" type="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/LandscapeButton/Center"]
-margin_left = 36.0
-margin_top = 7.0
-margin_right = 162.0
-margin_bottom = 40.0
+[node name="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/LandscapeButton" index="1"]
 custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 text = "Landscape"
 
-[node name="SoundButton" type="TextureButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox"]
+[node name="SoundButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox" instance=ExtResource( 11 )]
 margin_top = 397.0
-margin_right = 198.0
 margin_bottom = 445.0
 rect_min_size = Vector2( 198, 48 )
-texture_normal = ExtResource( 1 )
-texture_pressed = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Center" type="CenterContainer" parent="HBox/ButtonContainerRect/MarginContainer/VBox/SoundButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SoundLabel" type="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/SoundButton/Center"]
-margin_left = 64.0
-margin_top = 7.0
-margin_right = 134.0
-margin_bottom = 40.0
+[node name="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/SoundButton" index="1"]
 custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 text = "Sound"
 
-[node name="SaveButton" type="TextureButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox"]
+[node name="SaveButton" parent="HBox/ButtonContainerRect/MarginContainer/VBox" instance=ExtResource( 11 )]
 margin_top = 458.0
-margin_right = 198.0
 margin_bottom = 506.0
 rect_min_size = Vector2( 198, 48 )
-texture_normal = ExtResource( 1 )
-texture_pressed = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Center" type="CenterContainer" parent="HBox/ButtonContainerRect/MarginContainer/VBox/SaveButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SoaveLabel" type="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/SaveButton/Center"]
-margin_left = 8.0
-margin_top = 7.0
-margin_right = 190.0
-margin_bottom = 40.0
+[node name="Label" parent="HBox/ButtonContainerRect/MarginContainer/VBox/SaveButton" index="1"]
 custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 text = "Save Settings"
 
 [node name="TitleBackground" type="TextureRect" parent="HBox"]
@@ -332,8 +183,16 @@ margin_right = 960.0
 margin_bottom = 540.0
 texture = ExtResource( 2 )
 
-[connection signal="button_down" from="HBox/ButtonContainerRect/MarginContainer/VBox/StartButton" to="." method="_on_StartButton_button_down"]
+[connection signal="pressed" from="HBox/ButtonContainerRect/MarginContainer/VBox/StartButton/Button" to="." method="_on_StartButton_pressed"]
 [connection signal="button_down" from="HBox/ButtonContainerRect/MarginContainer/VBox/PlayersHBox/PlayersArrowButtons/PlayersUpButton" to="." method="_on_PlayersUpButton_button_down"]
 [connection signal="button_down" from="HBox/ButtonContainerRect/MarginContainer/VBox/PlayersHBox/PlayersArrowButtons/PlayersDownButton" to="." method="_on_PlayersDownButton_button_down"]
 [connection signal="button_down" from="HBox/ButtonContainerRect/MarginContainer/VBox/RoundsHBox/RoundsArrowButtons/RoundsUpButton" to="." method="_on_RoundsUpButton_button_down"]
 [connection signal="button_down" from="HBox/ButtonContainerRect/MarginContainer/VBox/RoundsHBox/RoundsArrowButtons/RoundsDownButton" to="." method="_on_RoundsDownButton_button_down"]
+
+[editable path="HBox/ButtonContainerRect/MarginContainer/VBox/StartButton"]
+[editable path="HBox/ButtonContainerRect/MarginContainer/VBox/WeaponsButton"]
+[editable path="HBox/ButtonContainerRect/MarginContainer/VBox/EconButton"]
+[editable path="HBox/ButtonContainerRect/MarginContainer/VBox/PhysicsButton"]
+[editable path="HBox/ButtonContainerRect/MarginContainer/VBox/LandscapeButton"]
+[editable path="HBox/ButtonContainerRect/MarginContainer/VBox/SoundButton"]
+[editable path="HBox/ButtonContainerRect/MarginContainer/VBox/SaveButton"]

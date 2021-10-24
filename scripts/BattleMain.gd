@@ -55,7 +55,7 @@ func get_current_round() -> int:
 func handle_death(dead_tank: KinematicBody2D) -> void:
 	var dead_tank_slot: String = Utils.get_tank_slot(dead_tank.name)
 	var killer_slot: String = Utils.get_tank_slot(turnQueue.get_active_tank_name())
-	death_order.append(dead_tank_slot)
+	death_order.push_front(dead_tank_slot)
 	if dead_tank_slot == killer_slot:
 		GameData.tank_data[dead_tank_slot]["Suicide"] += 1
 		GameData.tank_data[dead_tank_slot]["Money"] += GameData.money_table["Suicied"]
