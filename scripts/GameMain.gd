@@ -12,7 +12,9 @@ var state: int setget set_game_state, get_game_state
 var next_scene_path: String = ""
 
 func _ready() -> void:
-	Events.connect("change_game_state", self, "change_state")
+	var err: int = Events.connect("change_game_state", self, "change_state")
+	if err:
+		printerr("Connection Failed " + str(err))
 	self.state = GameData.GAME_STATES.MAIN_MENU
 
 func change_state(new_state: int) -> void:

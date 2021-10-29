@@ -7,7 +7,9 @@ onready var topWall: CollisionShape2D = $Top/CollisionShape2D
 onready var bottomWall: CollisionShape2D = $Bottom/CollisionShape2D
 
 func _ready() -> void:
-	Events.connect("battleMain_walls_changed", self, "set_walls")
+	var err: int = Events.connect("battleMain_walls_changed", self, "set_walls")
+	if err:
+		print_debug("Connection Failed")
 
 func set_walls(type: String) -> void:
 	match type:

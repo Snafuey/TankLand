@@ -14,6 +14,7 @@ static func get_random_spawn_index(index: int) -> int:
 	return new_index
 
 static func get_tank_num_scaler(num: int) -> int:
+# warning-ignore:narrowing_conversion
 	var scaler: int = round(num / GameData.game_settings["NumOfTanks"])
 	return scaler
 
@@ -36,9 +37,11 @@ static func sort_decending(a, b) -> bool:
 	return false
 
 static func get_tank_script_path(num: String) -> String:
-	var path = "res://scripts/" + GameData.tank_data["Player" + num]["Controller"] + ".gd"
+#	var path = "res://scripts/" + GameData.tank_data["Player" + num]["Controller"] + ".gd"
+	var path = "res://scripts/" + GameData.tank_data[num]["Controller"] + ".gd"
 	return path
 
 func get_tank_scene_path(num: String) -> String:
-	var path = "res://scenes/tanks/" + GameData.tank_data["Player" + num]["Tank"] + ".tscn"
+#	var path = "res://scenes/tanks/" + GameData.tank_data["Player" + num]["Tank"] + ".tscn"
+	var path = "res://scenes/tanks/" + GameData.tank_data[num]["Tank"] + ".tscn"
 	return path

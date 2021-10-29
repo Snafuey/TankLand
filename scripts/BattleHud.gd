@@ -8,10 +8,19 @@ onready var maxPower: Label = $Hud/MarginContainer/VBox/Row2/Max
 onready var health: Label = $Hud/MarginContainer/VBox/Row2/Health
 
 func _ready() -> void:
-	Events.connect("tank_activated", self, "new_tank_active")
-	Events.connect("tank_angle_changed", self, "change_angle")
-	Events.connect("tank_power_changed", self, "change_power")
-	Events.connect("tank_health_changed", self, "change_health")
+	var err: int = Events.connect("tank_activated", self, "new_tank_active")
+	if err:
+		printerr("Connection Failed " + str(err))
+	err = Events.connect("tank_angle_changed", self, "change_angle")
+	if err:
+		printerr("Connection Failed " + str(err))
+	err = Events.connect("tank_power_changed", self, "change_power")
+	if err:
+		printerr("Connection Failed " + str(err))
+	err = Events.connect("tank_health_changed", self, "change_health")
+	if err:
+		printerr("Connection Failed " + str(err))
+
 
 func new_tank_active(_power: int, _angle: float, _health: int, tank: KinematicBody2D) -> void:
 	change_power(_power)

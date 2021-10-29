@@ -11,10 +11,18 @@ var current_round: int = 0 setget set_current_round
 var current_walls: String setget set_walls
 
 func _ready() -> void:
-	Events.connect("terrain_finished", self, "terrain_finished")
-	Events.connect("turnQueue_tank_spawn_finished", self, "turnQueue_tanks_ready")
-	Events.connect("tank_died", self, "handle_death")
-	Events.connect("turnQueue_round_finished", self, "end_round" )
+	var err: int = Events.connect("terrain_finished", self, "terrain_finished")
+	if err:
+		printerr("Connection Failed " + str(err))
+	err = Events.connect("turnQueue_tank_spawn_finished", self, "turnQueue_tanks_ready")
+	if err:
+		printerr("Connection Failed " + str(err))
+	err = Events.connect("tank_died", self, "handle_death")
+	if err:
+		printerr("Connection Failed " + str(err))
+	err = Events.connect("turnQueue_round_finished", self, "end_round" )
+	if err:
+		printerr("Connection Failed " + str(err))
 	total_rounds = GameData.game_settings["Rounds"]
 	self.current_round += 1
 	init_new_battle()

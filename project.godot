@@ -9,19 +9,19 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "Item",
+"language": "GDScript",
+"path": "res://scripts/Item.gd"
+}, {
 "base": "Node",
 "class": "SoundManager",
 "language": "GDScript",
 "path": "res://scripts/GameSoundManager.gd"
-}, {
-"base": "Reference",
-"class": "TankData",
-"language": "GDScript",
-"path": "res://scripts/TankData.gd"
 } ]
 _global_script_class_icons={
-"SoundManager": "",
-"TankData": ""
+"Item": "",
+"SoundManager": ""
 }
 
 [application]

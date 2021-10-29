@@ -3,33 +3,48 @@ extends Node
 var active_tank: KinematicBody2D
 
 func _ready() -> void:
-	Events.connect("tank_turn_finished", self, "set_next_turn")
+	var err: int = Events.connect("tank_turn_finished", self, "set_next_turn")
+	if err:
+		printerr("Connection Failed " + str(err))
 
+
+func apply_tank_damage(damage_data: Dictionary) -> void:
+	var keys: Array = damage_data.keys()
+	for i in keys.size():
+		var tank: KinematicBody2D = get_node(keys[i])
+		tank.current_health += damage_data[keys[i]]["DamageAmount"]
+		
+		
 func start_round() -> void:
 	active_tank = get_child(0)
 	active_tank.is_active = true	
 	
 func spawn_tanks(terrain_points: Array) -> void:
+	var players_to_spawn: Array = GameData.tank_data.keys()
 	var scaler: int = Utils.get_tank_num_scaler(terrain_points.size())
 	var last_index: int
+	var spawn_index: int
 	for i in GameData.game_settings["NumOfTanks"]:
 		if i == 0:
-			var index: int = round(scaler / 2) 
+			# warning-ignore:narrowing_conversion
+			var index: int = round(scaler / 2) # warning-ignore:integer_division
 			last_index = index
-			var spawn_index: int = Utils.get_random_spawn_index(index)
-			tank_spawner(str(i + 1), terrain_points[spawn_index])
+			spawn_index = Utils.get_random_spawn_index(index)
+		
 		else:
 			var index: int = (last_index + scaler)
 			last_index = index
-			var spawn_index = Utils.get_random_spawn_index(index)
-			tank_spawner(str(i + 1), terrain_points[spawn_index])
+			spawn_index = Utils.get_random_spawn_index(index)
+		
+		players_to_spawn.shuffle()
+		var tank = load(Utils.get_tank_scene_path(players_to_spawn[0])).instance()
+		tank.set_script(load(Utils.get_tank_script_path(players_to_spawn[0])))
+		tank.init_spawn_data(players_to_spawn[0], terrain_points[spawn_index])
+		self.add_child(tank)
+		players_to_spawn.pop_front()
+	
 	Events.emit_signal("turnQueue_tank_spawn_finished")
 
-func tank_spawner(slot_index: String, spawn_pos: Vector2) -> void:
-	var tank = load(Utils.get_tank_scene_path(slot_index)).instance()
-	tank.set_script(load(Utils.get_tank_script_path(slot_index)))
-	tank.init_spawn_data(slot_index, spawn_pos)
-	self.add_child(tank)
 
 func set_tank_order(turn_order: Array) -> void:
 	for i in GameData.game_settings["NumOfTanks"]:

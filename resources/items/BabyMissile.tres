@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/Item.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/weapon icons/Baby Missile Icon.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+type = 0
+name = "Baby Missile"
+damage = 100
+explosion_rad = 20
+icon = ExtResource( 2 )
+cost = 400
+purchase_stack = 10
+maximum_amount = 99

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/Item.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/weapon icons/Nuke Icon.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+type = 0
+name = "Nuke"
+damage = 100
+explosion_rad = 200
+icon = ExtResource( 2 )
+cost = 12000
+purchase_stack = 1
+maximum_amount = 99

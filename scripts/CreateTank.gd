@@ -8,8 +8,6 @@ onready var nameInput: LineEdit = $CenterContainer/UIPanel/NameInput
 onready var tankIcons: Control = $CenterContainer/UIPanel/TankIcons
 onready var doneButtonLabel: Label = $CenterContainer/UIPanel/DoneButton/Label
 onready var doneButton: TextureButton = $CenterContainer/UIPanel/DoneButton/Button
-#onready var doneButtonLabel: Label = $CenterContainer/UIPanel/DoneButonLabel
-#onready var doneButton: TextureButton = $CenterContainer/UIPanel/DoneButton1
 
 var colors: Array = GameData.tank_colors.keys()
 var color_index: int = 0

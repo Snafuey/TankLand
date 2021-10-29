@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/Item.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/weapon icons/Missile Icon.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+type = 0
+name = "Missile"
+damage = 100
+explosion_rad = 40
+icon = ExtResource( 2 )
+cost = 1875
+purchase_stack = 5
+maximum_amount = 99
