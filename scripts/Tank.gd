@@ -11,12 +11,14 @@ onready var tankSFX: AudioStreamPlayer = $TankSFX
 onready var line: Line2D = $TankSprite/Barrel/TrajectoryLine
 
 var tank_color: Color
+
 var velocity: Vector2 = Vector2.ZERO
 
 var power: int = 1 setget set_power
 var angle: float = 0.0 setget set_angle
 var max_health: int = 100
 var current_health: int setget set_current_health
+var current_weapon: String setget set_weapon
 
 var is_active: bool = false setget set_as_active
 var can_process_turn: bool = false
@@ -35,6 +37,7 @@ func _ready() -> void:
 	self.current_health = max_health 
 	self.power = 200
 	self.angle = -32.0
+	self.current_weapon = "BabyMissile"
 
 #var max_points: int = 300
 #func _process(delta: float) -> void:
@@ -67,7 +70,7 @@ func shoot() -> void:
 	projectile.connect("bullet_finished", self, "finish_turn")
 	projectile.global_position = muzzel.global_position
 	find_parent("BattleField").add_child(projectile)
-	projectile.set_initial_velocity(Vector2(cos(angle_rad), sin(angle_rad)) * power)
+	projectile.initialize(Vector2(cos(angle_rad), sin(angle_rad)) * power, current_weapon)
 	
 	muzzelFlash.emitting = true
 	tankSFX.set_stream(SHOOT_SFX)
@@ -80,6 +83,9 @@ func set_as_active(value: bool) -> void:
 	if is_active:
 		Events.emit_signal("tank_activated", power, angle, current_health, self)
 
+func set_weapon(value: String) -> void:
+	current_weapon = value
+	Events.emit_signal("tank_weapon_changed", current_weapon)
 
 func set_current_health(value: int) -> void:
 	current_health = value

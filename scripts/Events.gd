@@ -15,7 +15,8 @@ signal tank_activated(power, angle, health, tank_ref) # warning-ignore:unused_si
 signal tank_health_changed(health) # warning-ignore:unused_signal
 signal tank_power_changed(power) # warning-ignore:unused_signal
 signal tank_angle_changed(angle) # warning-ignore:unused_signal
+signal tank_weapon_changed(weapon) # warning-ignore:unused_signal
 signal tank_died(tank_ref) # warning-ignore:unused_signal
 
-signal explosion_finished() # warning-ignore:unused_signal
-signal explosion_hit_tank(tank_ref, damage_value) # warning-ignore:unused_signal
+
+

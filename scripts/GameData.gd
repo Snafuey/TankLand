@@ -49,7 +49,8 @@ var tank_data: Dictionary = {}
 #																	"Earnings": 10000, 
 #																	"Kills": 4,
 #																	"TotalKills": 5,
-#																	"Suicide": 0 },
+#																	"Suicide": 0,
+#																	"Weapon" },
 #																"Player2": {
 #																	"Name": "Amber",
 #																	"Color": Color.green,
@@ -88,6 +89,22 @@ var angle_SFX_sounds: Array = ["res://assets/audio/angle1.wav",
 var battle_music: Array = ["res://assets/audio/battle-music-1.wav",
 													"res://assets/audio/battle-music-2.wav",
 													"res://assets/audio/battle-music-3.wav"]
+
+var Player1_Inventory: Resource = null
+var Player2_Inventory: Resource = null
+var Player3_Inventory: Resource = null
+var Player4_Inventory: Resource = null
+var Player5_Inventory: Resource = null
+var Player6_Inventory: Resource = null
+var Player7_Inventory: Resource = null
+
+func _ready() -> void:
+	Player1_Inventory = load("res://resources/inventories/Player1.tres")
+	var keys: Array = Player1_Inventory.weapons.keys()
+	Player1_Inventory.weapons["Slot" + str(keys.size() + 1)] = {"Item": "Test", "Amount": 50}
+	for slot in Player1_Inventory.weapons.keys():
+		if Player1_Inventory.weapons[slot]["Amount"] != 0:
+			print(Player1_Inventory.weapons[slot])
 
 
 func new_round_set_tank_data() -> void:

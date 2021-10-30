@@ -1,18 +1,25 @@
 extends Node
 
 var active_tank: KinematicBody2D
+var damage_queue: Dictionary
 
 func _ready() -> void:
-	var err: int = Events.connect("tank_turn_finished", self, "set_next_turn")
-	if err:
-		printerr("Connection Failed " + str(err))
+	pass
 
 
-func apply_tank_damage(damage_data: Dictionary) -> void:
-	var keys: Array = damage_data.keys()
-	for i in keys.size():
-		var tank: KinematicBody2D = get_node(keys[i])
-		tank.current_health += damage_data[keys[i]]["DamageAmount"]
+func append_damage_queue(tank: KinematicBody2D, damage: int) -> void:
+	var keys = damage_queue.keys()
+	damage_queue[keys.size()] = [tank, damage]
+
+
+func apply_tank_damage(damage_data: Array) -> void:
+	var tank: KinematicBody2D = damage_data[0]
+	print(damage_data[1])
+	if tank.current_health > 0:
+		tank.current_health -= damage_data[1]
+	var keys: Array = damage_queue.keys()
+	damage_queue.erase(keys[0])
+	set_next_turn()
 		
 		
 func start_round() -> void:
@@ -53,6 +60,10 @@ func set_tank_order(turn_order: Array) -> void:
 	start_round()
 		
 func set_next_turn() -> void:
+	if damage_queue.keys().size() > 0:
+		var keys: Array = damage_queue.keys()
+		apply_tank_damage(damage_queue[keys[0]])
+		return
 	yield(get_tree().create_timer(1), "timeout")
 	var has_winner: bool = check_for_winner()
 	if has_winner:

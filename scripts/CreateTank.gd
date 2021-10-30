@@ -62,7 +62,8 @@ func set_player_data() -> void:
 		"Earnings": GameData.game_settings["StartingMoney"],
 		"Kills": 0,
 		"Suicide": 0,
-		"TotalKills": 0 }
+		"TotalKills": 0,
+		"Weapon": "BabyMissile" }
 	if current_player < num_of_tanks:
 		current_player += 1
 		color_index += 1
