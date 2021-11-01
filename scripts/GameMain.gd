@@ -1,7 +1,7 @@
 extends Node
 
 #can const all scences and music/sounds that this script sets
-const MAIN_MENU_MUSIC: = preload("res://assets/audio/main-menu-music.wav")
+const MAIN_MENU_MUSIC: = preload("res://assets/audio/MainMenuMusic.ogg")
 const TANK_CREATION_MUSIC = preload("res://assets/audio/TrankCreationMenu.wav")
 
 onready var currentScene: Node = $CurrentScene
@@ -45,7 +45,7 @@ func set_game_state(new_state: int) -> void:
 		
 		GameData.GAME_STATES.BATTLE:
 			var rng_music_index: int = Utils.get_random_index_range(
-					0, (GameData.battle_music.size() - 1))
+				0, (GameData.battle_music.size() - 1))
 			soundManager.change_music(load(GameData.battle_music[rng_music_index]), -30, 2)
 			match previous_state:
 				GameData.GAME_STATES.ROUND_RANKING: 

@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-onready var backGround: ColorRect = $Hud/Background
 onready var power: Label = $Hud/MarginContainer/VBox/Row1/Power
 onready var angle: Label = $Hud/MarginContainer/VBox/Row1/Angle
 onready var tankName: Label = $Hud/MarginContainer/VBox/Row1/Name

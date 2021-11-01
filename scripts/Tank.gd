@@ -37,7 +37,7 @@ func _ready() -> void:
 	self.current_health = max_health 
 	self.power = 200
 	self.angle = -32.0
-	self.current_weapon = "BabyMissile"
+	self.current_weapon = "Nuke"
 
 #var max_points: int = 300
 #func _process(delta: float) -> void:

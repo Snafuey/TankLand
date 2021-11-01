@@ -18,7 +18,7 @@ func apply_tank_damage(damage_data: Array) -> void:
 	if tank.current_health > 0:
 		tank.current_health -= damage_data[1]
 	var keys: Array = damage_queue.keys()
-	damage_queue.erase(keys[0])
+	damage_queue.erase(keys[0]) # warning-ignore:return_value_discarded
 	set_next_turn()
 		
 		

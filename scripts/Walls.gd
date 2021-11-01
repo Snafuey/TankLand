@@ -18,19 +18,16 @@ func set_walls(type: String) -> void:
 			leftWall.set_deferred("disabled", false)
 			rightWall.set_deferred("disabled", false)
 			topWall.set_deferred("disabled", false)
-			bottomWall.set_deferred("disabled", false)
 		"Bounce":
 			line.default_color = Color.red
 			leftWall.set_deferred("disabled", false)
 			rightWall.set_deferred("disabled", false)
 			topWall.set_deferred("disabled", false)
-			bottomWall.set_deferred("disabled", false)
 		"Wrap":
 			line.default_color = Color.fuchsia
 			leftWall.set_deferred("disabled", true)
 			rightWall.set_deferred("disabled", true)
 			topWall.set_deferred("disabled", true)
-			bottomWall.set_deferred("disabled", true)
 		"Random":
 			var rand_wall: String = get_random_wall_type()
 			set_walls(rand_wall)

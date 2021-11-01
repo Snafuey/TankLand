@@ -86,9 +86,9 @@ var angle_SFX_sounds: Array = ["res://assets/audio/angle1.wav",
 															"res://assets/audio/angle3.wav",
 															"res://assets/audio/angle4.wav",
 															"res://assets/audio/angle5.wav"]
-var battle_music: Array = ["res://assets/audio/battle-music-1.wav",
-													"res://assets/audio/battle-music-2.wav",
-													"res://assets/audio/battle-music-3.wav"]
+var battle_music: Array = ["res://assets/audio/battle-music-1.ogg",
+													"res://assets/audio/battle-music-2.ogg",
+													"res://assets/audio/battle-music-3.ogg"]
 
 var Player1_Inventory: Resource = null
 var Player2_Inventory: Resource = null

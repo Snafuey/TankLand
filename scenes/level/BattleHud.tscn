@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/fonts/RobotoBold14.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scripts/BattleHud.gd" type="Script" id=2]
+[ext_resource path="res://assets/sprites/Popup Menu Container.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/weapon icons/Nuke Icon.png" type="Texture" id=4]
 
 [node name="BattleHud" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -14,10 +16,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Background" type="ColorRect" parent="Hud"]
+[node name="Background" type="NinePatchRect" parent="Hud"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.737255, 0.737255, 0.737255, 0.498039 )
+texture = ExtResource( 3 )
+patch_margin_left = 6
+patch_margin_top = 5
+patch_margin_right = 6
+patch_margin_bottom = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -26,18 +32,23 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 0, 40 )
+custom_constants/margin_right = 70
+custom_constants/margin_top = 3
+custom_constants/margin_left = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VBox" type="VBoxContainer" parent="Hud/MarginContainer"]
-margin_right = 960.0
-margin_bottom = 40.0
+margin_left = 10.0
+margin_top = 3.0
+margin_right = 890.0
+margin_bottom = 43.0
 rect_min_size = Vector2( 0, 40 )
-custom_constants/separation = 0
+custom_constants/separation = -5
 
 [node name="Row1" type="HBoxContainer" parent="Hud/MarginContainer/VBox"]
-margin_right = 960.0
+margin_right = 880.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )
 __meta__ = {
@@ -60,7 +71,7 @@ custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "1000"
 
-[node name="AngleTitle2" type="Label" parent="Hud/MarginContainer/VBox/Row1"]
+[node name="AngleTitle" type="Label" parent="Hud/MarginContainer/VBox/Row1"]
 margin_left = 101.0
 margin_right = 157.0
 margin_bottom = 19.0
@@ -79,18 +90,36 @@ text = "180.5"
 
 [node name="Name" type="Label" parent="Hud/MarginContainer/VBox/Row1"]
 margin_left = 235.0
-margin_right = 435.0
+margin_right = 698.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.639216, 0, 0, 1 )
 text = "Kurt"
 align = 1
 
+[node name="WeaponIcon" type="TextureRect" parent="Hud/MarginContainer/VBox/Row1"]
+margin_left = 702.0
+margin_right = 724.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 19 )
+texture = ExtResource( 4 )
+stretch_mode = 4
+
+[node name="WeaponLabel" type="Label" parent="Hud/MarginContainer/VBox/Row1"]
+margin_left = 728.0
+margin_right = 880.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 0, 19 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = ": 5 -  Baby Missile"
+
 [node name="Row2" type="HBoxContainer" parent="Hud/MarginContainer/VBox"]
-margin_top = 20.0
-margin_right = 960.0
-margin_bottom = 40.0
+margin_top = 15.0
+margin_right = 880.0
+margin_bottom = 35.0
 rect_min_size = Vector2( 0, 20 )
 __meta__ = {
 "_edit_use_anchors_": false

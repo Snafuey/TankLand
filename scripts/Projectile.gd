@@ -35,9 +35,8 @@ func _physics_process(delta: float) -> void:
 		if body.is_in_group("walls"): 
 			if GameData.game_settings["CurrentWalls"] == "Bounce":
 				velocity = velocity.bounce(collision.normal)
-#			if GameData.game_settings["CurrentWalls"] == "Static":
-#				spawn_explosion()
-#				bullet_finsihed()
+			else:
+				handle_collision(body)
 		else:
 			handle_collision(body)
 			self.visible = false
@@ -60,6 +59,10 @@ func handle_collision(body: Object) -> void:
 	if body.is_in_group("tank"):
 		emit_signal("direct_hit", body, weapon_data.damage)
 		yield(spawn_explosion(), "completed")
+	
+	if body.is_in_group("walls"):
+		yield(spawn_explosion(), "completed")
+		
 	bullet_finsihed()
 
 
