@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/fonts/RobotoBold14.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/sprites/Selection Arrow.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/weapon icons/Baby Missile Icon.png" type="Texture" id=3]
+[ext_resource path="res://scripts/ShopItem.gd" type="Script" id=4]
+[ext_resource path="res://resources/items/BabyMissile.tres" type="Resource" id=5]
+[ext_resource path="res://assets/sprites/Shop Item Hover.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/Shop Item Pressed.png" type="Texture" id=7]
+[ext_resource path="res://resources/ShopItemButtonGroup.tres" type="ButtonGroup" id=8]
+[ext_resource path="res://resources/items/Nuke.tres" type="Resource" id=9]
+
+[node name="ShopItem1" type="Control" groups=[
+"shopItem",
+]]
+margin_right = 342.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 342, 16 )
+mouse_filter = 2
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+weapon_data = ExtResource( 5 )
+defensive_data = ExtResource( 9 )
+
+[node name="SelectedArrow" type="Sprite" parent="."]
+position = Vector2( -10, 10 )
+texture = ExtResource( 2 )
+
+[node name="ItemButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = 1.0
+margin_right = -3.0
+margin_bottom = 1.0
+rect_min_size = Vector2( 342, 16 )
+toggle_mode = true
+group = ExtResource( 8 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemHbox" type="HBoxContainer" parent="."]
+margin_right = 325.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 325, 19 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemQty" type="Label" parent="ItemHbox"]
+margin_right = 16.0
+margin_bottom = 19.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "99"
+
+[node name="ItemIcon" type="TextureRect" parent="ItemHbox"]
+margin_left = 20.0
+margin_right = 42.0
+margin_bottom = 19.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+stretch_mode = 4
+
+[node name="ItemName" type="Label" parent="ItemHbox"]
+margin_left = 46.0
+margin_right = 249.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Baby "
+
+[node name="ItemPriceStack" type="Label" parent="ItemHbox"]
+margin_left = 253.0
+margin_right = 325.0
+margin_bottom = 19.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "$20000/10"
+
+[connection signal="toggled" from="ItemButton" to="." method="_on_ItemButton_toggled"]

@@ -7,6 +7,7 @@
 script = ExtResource( 1 )
 type = 0
 name = "Baby Nuke"
+details = "This is a test and will still need to be added to every item at the time of creating it. I hope this works well."
 damage = 100
 explosion_rad = 120
 icon = ExtResource( 2 )

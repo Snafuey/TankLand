@@ -18,5 +18,5 @@ signal tank_angle_changed(angle) # warning-ignore:unused_signal
 signal tank_weapon_changed(weapon) # warning-ignore:unused_signal
 signal tank_died(tank_ref) # warning-ignore:unused_signal
 
-
+signal shop_item_selected(item_resource) # warning-ignore:unused_signal
 

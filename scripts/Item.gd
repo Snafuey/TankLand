@@ -8,6 +8,7 @@ enum TYPE {
 
 export(TYPE) var type = TYPE.WEAPON
 export(String) var name = "Name"
+export(String, MULTILINE) var details = ""
 export(int) var damage = 0
 export(int) var explosion_rad = 0
 export(PackedScene) var explosion_scene
