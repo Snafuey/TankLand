@@ -13,7 +13,7 @@ onready var turnQueue = get_parent().get_node("TurnQueue")
 
 var screensize: Vector2
 var velocity: Vector2 = Vector2.ZERO
-var weapon_data: Resource
+var weapon_data: Item
 
 
 func _ready() -> void:
@@ -22,9 +22,9 @@ func _ready() -> void:
 	if err:
 		printerr("Connection Failed " + str(err))
 
-func initialize(vel: Vector2, weapon_used: String) -> void:
+func initialize(vel: Vector2, weapon_used: Item) -> void:
 	velocity = vel
-	weapon_data = load("res://resources/items/" + weapon_used + ".tres")
+	weapon_data = weapon_used
 	
 
 func _physics_process(delta: float) -> void:

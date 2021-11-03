@@ -6,6 +6,7 @@ enum GAME_STATES {
 	MAIN_MENU,
 	OPTIONS_MENU,
 	TANK_CREATION,
+	SHOP
 	BATTLE,
 	ROUND_RANKING,
 	PAUSE,
@@ -40,6 +41,17 @@ var money_table: Dictionary = {
 	"Suicied": -1500 }
 
 var tank_data: Dictionary = {}
+
+var Player1_Items: Inventory = preload("res://resources/inventories/Player1.tres")
+var Player2_Items: Inventory = preload("res://resources/inventories/Player2.tres")
+#var Player3_Items: Inventory = preload("res://resources/inventories/Player3.tres")
+#var Player4_Items: Inventory = preload("res://resources/inventories/Player4.tres")
+#var Player5_Items: Inventory = preload("res://resources/inventories/Player5.tres")
+#var Player6_Items: Inventory = preload("res://resources/inventories/Player6.tres")
+#var Player7_Items: Inventory = preload("res://resources/inventories/Player7.tres")
+
+var all_inventories: Dictionary = {"Player1": Player1_Items, "Player2": Player2_Items}
+
 #																"Player1": {
 #																	"Name": "Kurt",
 #																	"Color": Color.darkred,
@@ -81,6 +93,7 @@ var tank_data: Dictionary = {}
 #																	"Kills": 9,
 #																	"TotalKills": 10,
 #																	"Suicide": 0 } }
+
 var angle_SFX_sounds: Array = ["res://assets/audio/angle1.wav",
 															"res://assets/audio/angle2.wav",
 															"res://assets/audio/angle3.wav",
@@ -90,36 +103,61 @@ var battle_music: Array = ["res://assets/audio/battle-music-1.ogg",
 													"res://assets/audio/battle-music-2.ogg",
 													"res://assets/audio/battle-music-3.ogg"]
 
-var Player1_Inventory: Resource = null
-var Player2_Inventory: Resource = null
-var Player3_Inventory: Resource = null
-var Player4_Inventory: Resource = null
-var Player5_Inventory: Resource = null
-var Player6_Inventory: Resource = null
-var Player7_Inventory: Resource = null
+
 
 func _ready() -> void:
-	Player1_Inventory = load("res://resources/inventories/Player1.tres")
-	var keys: Array = Player1_Inventory.weapons.keys()
-	Player1_Inventory.weapons["Slot" + str(keys.size() + 1)] = {"Item": "Test", "Amount": 50}
-	for slot in Player1_Inventory.weapons.keys():
-		if Player1_Inventory.weapons[slot]["Amount"] != 0:
-			print(Player1_Inventory.weapons[slot])
+	pass
+#	Player1_Items = load("res://resources/inventories/Player1.tres")
+#	var all_inv_keys: Array = all_inventories.keys()
+#	var player_inventory: Resource = all_inventories[all_inv_keys[0]]
+#	print(player_inventory)
+#
+#	print(player_inventory.weapons)
+#	print(player_inventory.weapons["Baby Missile"])
+#	var item_data: Resource = player_inventory.weapons["Baby Missile"]["Item"]
+#	print(player_inventory.weapons["Baby Missile"]["Amount"])
+#	print(item_data.name)
+#	print(item_data.damage)
+#	player_inventory.equipped_weapon = item_data
+#	var equipped_item: Resource = player_inventory.equipped_weapon
+#	print(player_inventory.equipped_weapon.name)
+#	Player1_Items.weapons["Slot" + str(keys.size() + 1)] = {"Item": "Test", "Amount": 50}
+#	for slot in Player1_Items.weapons.keys():
+#		if Player1_Items.weapons[slot]["Amount"] != 0:
+#			print(Player1_Items.weapons[slot])
 
 
 func new_round_set_tank_data() -> void:
-	for i in game_settings["NumOfTanks"]:
-		tank_data["Player" + str(i + 1)]["Suicied"] = 0
-		tank_data["Player" + str(i + 1)]["Kills"] = 0
+	var player_list: Array = Utils.get_tank_data_player_keys()
+	if player_list.empty():
+		return
+	for player in player_list:
+		tank_data[player]["Suicied"] = 0
+		tank_data[player]["Kills"] = 0
+#	for i in game_settings["NumOfTanks"]:
+#		tank_data["Player" + str(i + 1)]["Suicied"] = 0
+#		tank_data["Player" + str(i + 1)]["Kills"] = 0
 
 func replay_game_set_tank_data() -> void:
-	for i in game_settings["NumOfTanks"]:
-		tank_data["Player" + str(i + 1)]["Money"] = 0
-		tank_data["Player" + str(i + 1)]["Earnings"] = 0
-		tank_data["Player" + str(i + 1)]["Kills"] = 0
-		tank_data["Player" + str(i + 1)]["TotalKills"] = 0
-		tank_data["Player" + str(i + 1)]["Suicide"] = 0
+	var player_list: Array = Utils.get_tank_data_player_keys()
+	if player_list.empty():
+		return
+	for player in player_list:
+		tank_data[player]["Money"] = 0
+		tank_data[player]["Earnings"] = 0
+		tank_data[player]["Kills"] = 0
+		tank_data[player]["TotalKills"] = 0
+		tank_data[player]["Suicide"] = 0
+	clear_inventories()
+#	for i in game_settings["NumOfTanks"]:
+#		tank_data["Player" + str(i + 1)]["Money"] = 0
+#		tank_data["Player" + str(i + 1)]["Earnings"] = 0
+#		tank_data["Player" + str(i + 1)]["Kills"] = 0
+#		tank_data["Player" + str(i + 1)]["TotalKills"] = 0
+#		tank_data["Player" + str(i + 1)]["Suicide"] = 0
 
 func clear_tank_data() -> void:
 	tank_data = {}
 		
+func clear_inventories() -> void:
+	all_inventories = {}

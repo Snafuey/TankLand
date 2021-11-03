@@ -43,10 +43,18 @@ func set_game_state(new_state: int) -> void:
 			currentScene.add_child_path("res://scenes/menus/TankCreationMenu.tscn")
 			animPlayer.play("fade_to_normal")
 		
+		GameData.GAME_STATES.SHOP:
+			soundManager.change_music(MAIN_MENU_MUSIC, 0, 3)
+			if previous_state == GameData.GAME_STATES.TANK_CREATION:
+				animPlayer.play("fade_to_black")
+				yield(animPlayer, "animation_finished")
+				currentScene.queue_child_index(0)
+			currentScene.add_child_path("res://scenes/menus/Shop.tscn")
+		
 		GameData.GAME_STATES.BATTLE:
-			var rng_music_index: int = Utils.get_random_index_range(
+			var rng_index: int = Utils.get_random_index_range(
 				0, (GameData.battle_music.size() - 1))
-			soundManager.change_music(load(GameData.battle_music[rng_music_index]), -30, 2)
+			soundManager.change_music(load(GameData.battle_music[rng_index]), -30, 2)
 			match previous_state:
 				GameData.GAME_STATES.ROUND_RANKING: 
 					GameData.new_round_set_tank_data()

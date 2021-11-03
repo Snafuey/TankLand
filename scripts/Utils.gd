@@ -8,6 +8,14 @@ static func get_tank_name_from_slot(tank_slot: String) -> String:
 	var tank_name: String = tank_slot + "-" + GameData.tank_data[tank_slot]["Name"]
 	return tank_name
 
+static func get_tank_data_player_keys() -> Array:
+	var player_list: Array = GameData.tank_data.keys()
+	return player_list
+
+static func get_player_inventory(player_slot: String) -> Inventory:
+	var player_inventory: Inventory = GameData.all_inventories[player_slot]
+	return player_inventory
+
 static func get_random_spawn_index(index: int) -> int:
 	randomize()
 	var new_index: int = round(index + rand_range(-9 , 9)) # warning-ignore:narrowing_conversion
@@ -25,10 +33,14 @@ static func get_random_index_range(start: int, end: int) -> int:
 
 static func get_tank_data_by_type(type: String) -> Array:
 	var ranks: Array = []
-	for i in GameData.game_settings["NumOfTanks"]:
-		var value: int = GameData.tank_data["Player" + str(i + 1)][type]
-		var tank_slot: String = "Player" + str(i + 1)
-		ranks.append([value, tank_slot])
+	var player_list: Array = Utils.get_tank_data_player_keys()
+	for player in player_list:
+		var value: int = GameData.tank_data[player][type]
+		ranks.append([value, player])
+#	for i in GameData.game_settings["NumOfTanks"]:
+#		var value: int = GameData.tank_data["Player" + str(i + 1)][type]
+#		var tank_slot: String = "Player" + str(i + 1)
+#		ranks.append([value, tank_slot])
 	return ranks
 
 static func sort_decending(a, b) -> bool:

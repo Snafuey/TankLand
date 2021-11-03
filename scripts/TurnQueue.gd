@@ -37,7 +37,6 @@ func spawn_tanks(terrain_points: Array) -> void:
 			var index: int = round(scaler / 2) # warning-ignore:integer_division
 			last_index = index
 			spawn_index = Utils.get_random_spawn_index(index)
-		
 		else:
 			var index: int = (last_index + scaler)
 			last_index = index

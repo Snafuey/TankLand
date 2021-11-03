@@ -17,36 +17,58 @@ onready var buyButton: TextureButton = $Center/ShopWindow/BuyButton/Button
 onready var buyButtonLabel: Label = $Center/ShopWindow/BuyButton/Label
 
 var player_list: Array = []
+var current_player_inventory: Inventory
 
 func _ready() -> void:
 	var err: int = Events.connect("shop_item_selected", self, "item_selected")
 	if err:
 		printerr("Connection Failed " + str(err))
-	typeButtonWeapon.pressed = true
-	player_list = GameData.tank_data.keys()
-	set_header_text(player_list)
+	player_list = ["Player1"]
+#	player_list = Utils.get_tank_data_player_keys()
+	set_new_player(player_list)
 
 
-func item_selected(item_resource: Resource) -> void:
+func item_selected(item: Item) -> void:
 	enable_buy_button()
-	set_inspector(item_resource)
+	set_inspector(item)
 
 
-func set_header_text(players: Array) -> void:
+func set_new_player(players: Array) -> void:
 	if players.empty():
-		return	
-	var player: String = players[0]
+		#change to be error handing maybe go back to main menu
+		typeButtonWeapon.pressed = true
+		return
+	var current_player: String = players[0]
+	current_player_inventory = Utils.get_player_inventory(current_player)
+	set_header_text(current_player)
+	typeButtonWeapon.pressed = true
+
+
+func set_header_text(player: String) -> void:
+	if GameData.tank_data.empty():
+		return
 	var color: Color = GameData.tank_data[player]["Color"]
 	playerName.text = GameData.tank_data[player]["Name"]
 	playerName.set("custom_colors/font_color", color)
 	playerCash.text = "$" + str(GameData.tank_data[player]["Money"])
-	player_list.pop_front()
+	set_remaining_rounds()
 
 
-func set_inspector(item_resource: Resource) -> void:
-	inspectorItemIcon.texture = item_resource.icon
-	inspectorItemName.text = item_resource.name
-	inspectorItemDetails.text = item_resource.details
+func set_remaining_rounds() -> void:
+	var battleMain: Node = get_parent().get_node_or_null("BattleField")
+	if battleMain:
+		var current_round: int = battleMain.get_current_round()
+		var remaining_rounds = GameData.game_settings["Rounds"] - current_round
+		if remaining_rounds == 1:
+			roundsRemaining.text = str(remaining_rounds) + " Round Remains."
+		else:
+			roundsRemaining.text = str(remaining_rounds) + " Rounds Remain."
+
+
+func set_inspector(item: Item) -> void:
+	inspectorItemIcon.texture = item.icon
+	inspectorItemName.text = item.name
+	inspectorItemDetails.text = item.details
 
 
 func clear_inspector() -> void:
@@ -70,7 +92,7 @@ func enable_buy_button() -> void:
 func new_item_type(type: String) -> void:
 	var items: Array = itemsContainer.get_children()
 	for item in items:
-		item.change_item_type(type)
+		item.change_item_type(type, current_player_inventory)
 	clear_inspector()
 	disable_buy_button()
 
@@ -86,8 +108,8 @@ func _on_Defensive_toggled(button_pressed: bool) -> void:
 
 
 func _on_DoneButton_pressed() -> void:
+	player_list.pop_front()
 	if player_list.size() > 0:
-		typeButtonWeapon.pressed = true
-		set_header_text(player_list)
+		set_new_player(player_list)
 	else:
 		print("Load New Scene")

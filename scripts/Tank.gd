@@ -18,16 +18,19 @@ var power: int = 1 setget set_power
 var angle: float = 0.0 setget set_angle
 var max_health: int = 100
 var current_health: int setget set_current_health
-var current_weapon: String setget set_weapon
+
+var inventory: Inventory
+var current_weapon: Item setget set_weapon
 
 var is_active: bool = false setget set_as_active
 var can_process_turn: bool = false
 
-func init_spawn_data(slot_index: String, spawn_pos: Vector2) -> void:
-#	self.name = "Player" + slot_index + "-" + GameData.tank_data["Player" + slot_index]["Name"]
-	self.name = slot_index + "-" + GameData.tank_data[slot_index]["Name"] 
-#	tank_color =  GameData.tank_data["Player" + slot_index]["Color"]
-	tank_color =  GameData.tank_data[slot_index]["Color"]
+func init_spawn_data(player_slot: String, spawn_pos: Vector2) -> void:
+	self.name = player_slot + "-" + GameData.tank_data[player_slot]["Name"] 
+	tank_color =  GameData.tank_data[player_slot]["Color"]
+	inventory = GameData.all_inventories[player_slot]
+	inventory.equipped_weapon = inventory.weapons["Baby Missile"]["Item"]
+	self.current_weapon = inventory.equipped_weapon
 	self.global_position = spawn_pos + Vector2(0 , -10)
 
 func _ready() -> void:
@@ -37,7 +40,6 @@ func _ready() -> void:
 	self.current_health = max_health 
 	self.power = 200
 	self.angle = -32.0
-	self.current_weapon = "Nuke"
 
 #var max_points: int = 300
 #func _process(delta: float) -> void:
@@ -83,8 +85,8 @@ func set_as_active(value: bool) -> void:
 	if is_active:
 		Events.emit_signal("tank_activated", power, angle, current_health, self)
 
-func set_weapon(value: String) -> void:
-	current_weapon = value
+func set_weapon(item: Item) -> void:
+	current_weapon = item
 	Events.emit_signal("tank_weapon_changed", current_weapon)
 
 func set_current_health(value: int) -> void:
