@@ -21,10 +21,10 @@ func change_item_type(type: String, player_inventory: Inventory) -> void:
 	match type:
 		"Weapon":
 			set_item_data(weapon_data)
-			itemQty.text = str(player_inventory.weapons[weapon_data.name]["Amount"])
+			update_item_qty(type, player_inventory)
 		"Defensive":
 			set_item_data(defensive_data)
-			itemQty.text = str(player_inventory.defensive[defensive_data.name]["Amount"])
+			update_item_qty(type, player_inventory)
 	deselect_item()
 
 
@@ -35,9 +35,12 @@ func set_item_data(item: Item) -> void:
 	itemPrice.text = "$" + str(item.cost) + "/" + str(item.purchase_stack)
 
 
-#func set_item_qty(inventory_key: String) -> void:
-#
-#	itemQty.text = player_inventory.
+func update_item_qty(type: String, player_inventory: Inventory) -> void:
+	match type:
+		"Weapon":
+			itemQty.text = str(player_inventory.weapons[weapon_data.name]["Amount"])
+		"Defensive":
+			itemQty.text = str(player_inventory.defensive[defensive_data.name]["Amount"])
 
 func deselect_item() -> void:
 	itemButton.pressed = false

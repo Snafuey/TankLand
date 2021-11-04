@@ -50,6 +50,7 @@ func set_game_state(new_state: int) -> void:
 				yield(animPlayer, "animation_finished")
 				currentScene.queue_child_index(0)
 			currentScene.add_child_path("res://scenes/menus/Shop.tscn")
+			animPlayer.play("fade_to_normal")
 		
 		GameData.GAME_STATES.BATTLE:
 			var rng_index: int = Utils.get_random_index_range(

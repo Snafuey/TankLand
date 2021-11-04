@@ -301,6 +301,7 @@ text = "Done"
 
 [connection signal="toggled" from="Center/ShopWindow/ItemType/ButtonHBox/Weapon" to="." method="_on_Weapon_toggled"]
 [connection signal="toggled" from="Center/ShopWindow/ItemType/ButtonHBox/Defensive" to="." method="_on_Defensive_toggled"]
+[connection signal="pressed" from="Center/ShopWindow/BuyButton/Button" to="." method="_on_Purchase_Button_pressed"]
 [connection signal="pressed" from="Center/ShopWindow/DoneButton/Button" to="." method="_on_DoneButton_pressed"]
 
 [editable path="Center/ShopWindow/BuyButton"]

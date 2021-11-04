@@ -11,13 +11,16 @@ onready var doneButton: TextureButton = $CenterContainer/UIPanel/DoneButton/Butt
 
 var colors: Array = GameData.tank_colors.keys()
 var color_index: int = 0
+
 var num_of_tanks: int = GameData.game_settings["NumOfTanks"]
-var current_player: int = 1
+var current_player_number: int = 1
+var current_player_slot: String
 var selected_tank: String
 var controller: String
 var player_name: String
 
 func _ready() -> void:
+	set_current_player_slot()
 	set_colors()
 	set_title_text()
 	nameInput.grab_focus()
@@ -35,6 +38,19 @@ func _process(_delta: float) -> void:
 		doneButton.disabled = true
 		
 
+func set_current_player_slot() -> void:
+	current_player_slot = "Player" + str(current_player_number)
+
+
+func set_colors() -> void:
+	background.color = GameData.tank_colors[colors[color_index]]
+	tankIcons.modulate = GameData.tank_colors[colors[color_index]]
+
+
+func set_title_text() -> void:
+	title.text = "Player " + str(current_player_number) + " (of " + str(num_of_tanks) + ")"
+	
+
 func _on_TankSelect_toggled(tank_num: int) -> void:
 	selected_tank = "Tank" + str(tank_num)
 
@@ -44,16 +60,16 @@ func _on_Controller_button_down(type: String) -> void:
 
 
 func _on_DoneButton_pressed() -> void:
-	var keys: Array = GameData.tank_data.keys()
-	for i in keys.size():
-		if nameInput.text == GameData.tank_data["Player" + str(i +1)]["Name"]:
+	var player_list: Array = Utils.get_tank_data_player_keys()
+	for player in player_list:
+		if nameInput.text == GameData.tank_data[player]["Name"]:
 			nameInput.text = "Name taken"
 			return
 	set_player_data()
 
 
 func set_player_data() -> void:
-	GameData.tank_data["Player" + str(current_player)] = {
+	GameData.tank_data[current_player_slot] = {
 		"Name": nameInput.text,
 		"Color": GameData.tank_colors[colors[color_index]],
 		"Tank": selected_tank,
@@ -62,33 +78,28 @@ func set_player_data() -> void:
 		"Earnings": GameData.game_settings["StartingMoney"],
 		"Kills": 0,
 		"Suicide": 0,
-		"TotalKills": 0,
-		"Weapon": "BabyMissile" }
-	if current_player < num_of_tanks:
-		current_player += 1
-		color_index += 1
+		"TotalKills": 0 }
+	GameData.add_player_items_to_inventories(current_player_slot)
+	if current_player_number < num_of_tanks:
 		next_player_reset()
 	else:
-		Events.emit_signal("change_game_state", GameData.GAME_STATES.BATTLE)
+		Events.emit_signal("change_game_state", GameData.GAME_STATES.SHOP) #GAME_STATES.BATTLE) 
 
 
 func next_player_reset() -> void:
+	current_player_number += 1
+	color_index += 1
+	set_current_player_slot()
+	clear_menu_inputs()
+	set_colors()
+	set_title_text()
+	nameInput.grab_focus()
+
+
+func clear_menu_inputs() -> void:
 	var buttons = get_tree().get_nodes_in_group("selectButtons")
 	for button in buttons:
 		button.pressed = false
-	set_colors()
-	set_title_text()
 	selected_tank = ""
 	controller = ""
 	nameInput.text = ""
-	nameInput.grab_focus()
-	
-
-func set_colors() -> void:
-	background.color = GameData.tank_colors[colors[color_index]]
-	tankIcons.modulate = GameData.tank_colors[colors[color_index]]
-
-
-func set_title_text() -> void:
-	title.text = "Player " + str(current_player) + " (of " + str(num_of_tanks) + ")"
-	

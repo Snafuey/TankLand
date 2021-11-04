@@ -4,13 +4,22 @@ static func get_tank_slot(tank_name: String) -> String:
 	var tank_slot: Array = tank_name.split("-")
 	return tank_slot[0]
 
-static func get_tank_name_from_slot(tank_slot: String) -> String:
-	var tank_name: String = tank_slot + "-" + GameData.tank_data[tank_slot]["Name"]
-	return tank_name
+static func build_tank_node_name(player_slot: String) -> String:
+	var tank_node_name: String = player_slot + "-" + GameData.tank_data[player_slot]["Name"]
+	return tank_node_name
+
+static func get_player_name_from_slot(player_slot: String) -> String:
+	var player_name: String = GameData.tank_data[player_slot]["Name"]
+	return player_name
 
 static func get_tank_data_player_keys() -> Array:
 	var player_list: Array = GameData.tank_data.keys()
 	return player_list
+
+#static func get_player_equipped_weapon(player_slot: String) -> Item:
+#	var player_inventory: Inventory = GameData.all_inventories[player_slot]
+#	var equipped_item: Item = player_inventory.equipped_weapon
+#	return equipped_item
 
 static func get_player_inventory(player_slot: String) -> Inventory:
 	var player_inventory: Inventory = GameData.all_inventories[player_slot]

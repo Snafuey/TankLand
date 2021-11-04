@@ -17,31 +17,33 @@ onready var buyButton: TextureButton = $Center/ShopWindow/BuyButton/Button
 onready var buyButtonLabel: Label = $Center/ShopWindow/BuyButton/Label
 
 var player_list: Array = []
-var current_player_inventory: Inventory
+var player_inventory: Inventory
+var selected_item: Item
+var selected_item_type: String
 
 func _ready() -> void:
 	var err: int = Events.connect("shop_item_selected", self, "item_selected")
 	if err:
 		printerr("Connection Failed " + str(err))
-	player_list = ["Player1"]
-#	player_list = Utils.get_tank_data_player_keys()
-	set_new_player(player_list)
+	player_list = Utils.get_tank_data_player_keys()
+	set_new_player()
 
 
-func item_selected(item: Item) -> void:
-	enable_buy_button()
-	set_inspector(item)
-
-
-func set_new_player(players: Array) -> void:
-	if players.empty():
+func set_new_player() -> void:
+	if player_list.empty():
 		#change to be error handing maybe go back to main menu
 		typeButtonWeapon.pressed = true
 		return
-	var current_player: String = players[0]
-	current_player_inventory = Utils.get_player_inventory(current_player)
-	set_header_text(current_player)
+	player_inventory = Utils.get_player_inventory(player_list[0])
+	set_header_text(player_list[0])
 	typeButtonWeapon.pressed = true
+
+
+func item_selected(item: Item) -> void:
+	selected_item = item
+	if GameData.tank_data[player_list[0]]["Money"] >= selected_item.cost:
+		enable_buy_button()
+	set_inspector()
 
 
 func set_header_text(player: String) -> void:
@@ -63,12 +65,14 @@ func set_remaining_rounds() -> void:
 			roundsRemaining.text = str(remaining_rounds) + " Round Remains."
 		else:
 			roundsRemaining.text = str(remaining_rounds) + " Rounds Remain."
+	else:
+		roundsRemaining.text = str(GameData.game_settings["Rounds"]) + " Rounds Remain."
 
 
-func set_inspector(item: Item) -> void:
-	inspectorItemIcon.texture = item.icon
-	inspectorItemName.text = item.name
-	inspectorItemDetails.text = item.details
+func set_inspector() -> void:
+	inspectorItemIcon.texture = selected_item.icon
+	inspectorItemName.text = selected_item.name
+	inspectorItemDetails.text = selected_item.details
 
 
 func clear_inspector() -> void:
@@ -90,26 +94,43 @@ func enable_buy_button() -> void:
 
 
 func new_item_type(type: String) -> void:
-	var items: Array = itemsContainer.get_children()
-	for item in items:
-		item.change_item_type(type, current_player_inventory)
+	var item_slots: Array = itemsContainer.get_children()
+	for slot in item_slots:
+		slot.change_item_type(type, player_inventory)
 	clear_inspector()
 	disable_buy_button()
 
 
 func _on_Weapon_toggled(button_pressed: bool) -> void:
 	if button_pressed:
-		new_item_type("Weapon")
-
+		selected_item_type = "Weapon"
+		new_item_type(selected_item_type)
 
 func _on_Defensive_toggled(button_pressed: bool) -> void:
 	if button_pressed:
-		new_item_type("Defensive")
+		selected_item_type = "Defensive"
+		new_item_type(selected_item_type)
 
+func _on_Purchase_Button_pressed() -> void:
+	match selected_item_type:
+		"Weapon":
+			player_inventory.weapons[selected_item.name]["Amount"] += selected_item.purchase_stack
+			GameData.tank_data[player_list[0]]["Money"] -= selected_item.cost
+			var item_slots: Array = itemsContainer.get_children()
+			for slot in item_slots:
+				slot.update_item_qty(selected_item_type, player_inventory)
+		"Defensive":
+			pass
 
 func _on_DoneButton_pressed() -> void:
 	player_list.pop_front()
 	if player_list.size() > 0:
-		set_new_player(player_list)
+		self.visible = false
+		yield(get_tree().create_timer(0.25), "timeout")
+		self.visible = true
+		set_new_player()
 	else:
-		print("Load New Scene")
+		Events.emit_signal("change_game_state", GameData.GAME_STATES.BATTLE)
+
+
+

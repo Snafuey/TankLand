@@ -54,7 +54,7 @@ func spawn_tanks(terrain_points: Array) -> void:
 
 func set_tank_order(turn_order: Array) -> void:
 	for i in GameData.game_settings["NumOfTanks"]:
-		var tank: KinematicBody2D = get_node(Utils.get_tank_name_from_slot(turn_order[i]))
+		var tank: KinematicBody2D = get_node(Utils.build_tank_node_name(turn_order[i]))
 		move_child(tank, 0)
 	start_round()
 		

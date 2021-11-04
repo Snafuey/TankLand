@@ -11,7 +11,7 @@ signal turnQueue_round_finished(last_tank_ref) # warning-ignore:unused_signal
 signal turnQueue_damage_applied() # warning-ignore:unused_signal
 
 signal tank_turn_finished() # warning-ignore:unused_signal
-signal tank_activated(power, angle, health, tank_ref) # warning-ignore:unused_signal
+signal tank_activated(power, angle, health, player_slot) # warning-ignore:unused_signal
 signal tank_health_changed(health) # warning-ignore:unused_signal
 signal tank_power_changed(power) # warning-ignore:unused_signal
 signal tank_angle_changed(angle) # warning-ignore:unused_signal

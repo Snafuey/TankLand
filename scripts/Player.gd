@@ -21,7 +21,7 @@ func _process(_delta: float) -> void:
 				self.power += 1
 			if Input.is_action_pressed("power-"):
 				self.power -= 1
-
+		
 		if Input.is_action_just_pressed("shoot"):
 			can_process_turn = false
 			shoot()

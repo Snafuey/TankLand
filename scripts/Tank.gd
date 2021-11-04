@@ -83,11 +83,12 @@ func set_as_active(value: bool) -> void:
 	is_active = value
 	can_process_turn = value
 	if is_active:
-		Events.emit_signal("tank_activated", power, angle, current_health, self)
+		var player_slot: String = Utils.get_tank_slot(self.name)
+		Events.emit_signal("tank_activated", power, angle, current_health, player_slot)
 
 func set_weapon(item: Item) -> void:
 	current_weapon = item
-	Events.emit_signal("tank_weapon_changed", current_weapon)
+	Events.emit_signal("tank_weapon_changed", Utils.get_tank_slot(self.name))
 
 func set_current_health(value: int) -> void:
 	current_health = value

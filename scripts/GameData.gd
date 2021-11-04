@@ -33,7 +33,7 @@ var game_settings: Dictionary = {
 	"Walls": ["Static", "Bounce", "Wrap", "Random"],
 	"CurrentWalls": "Wrap",
 	"MoneyAmounts": [0, 5000, 10000, 50000, 100000],
-	"StartingMoney": 0 }
+	"StartingMoney": 100000 }
 
 var money_table: Dictionary = {
 	"Win": 5000,
@@ -42,15 +42,15 @@ var money_table: Dictionary = {
 
 var tank_data: Dictionary = {}
 
-var Player1_Items: Inventory = preload("res://resources/inventories/Player1.tres")
-var Player2_Items: Inventory = preload("res://resources/inventories/Player2.tres")
+#var Player1_Items: Inventory = preload("res://resources/inventories/Player1.tres")
+#var Player2_Items: Inventory = preload("res://resources/inventories/Player2.tres")
 #var Player3_Items: Inventory = preload("res://resources/inventories/Player3.tres")
 #var Player4_Items: Inventory = preload("res://resources/inventories/Player4.tres")
 #var Player5_Items: Inventory = preload("res://resources/inventories/Player5.tres")
 #var Player6_Items: Inventory = preload("res://resources/inventories/Player6.tres")
 #var Player7_Items: Inventory = preload("res://resources/inventories/Player7.tres")
 
-var all_inventories: Dictionary = {"Player1": Player1_Items, "Player2": Player2_Items}
+var all_inventories: Dictionary = {}
 
 #																"Player1": {
 #																	"Name": "Kurt",
@@ -126,6 +126,9 @@ func _ready() -> void:
 #		if Player1_Items.weapons[slot]["Amount"] != 0:
 #			print(Player1_Items.weapons[slot])
 
+func add_player_items_to_inventories(player_slot: String) -> void:
+	var player_items: Inventory = load("res://resources/inventories/" + player_slot + ".tres")
+	all_inventories[player_slot] = player_items
 
 func new_round_set_tank_data() -> void:
 	var player_list: Array = Utils.get_tank_data_player_keys()
