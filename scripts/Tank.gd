@@ -26,9 +26,9 @@ var is_active: bool = false setget set_as_active
 var can_process_turn: bool = false
 
 func init_spawn_data(player_slot: String, spawn_pos: Vector2) -> void:
-	self.name = player_slot + "-" + GameData.tank_data[player_slot]["Name"] 
-	tank_color =  GameData.tank_data[player_slot]["Color"]
-	inventory = GameData.all_inventories[player_slot]
+	self.name = player_slot + "-" + Utils.get_player_name(player_slot) 
+	tank_color =  Utils.get_player_color(player_slot)
+	inventory = Utils.get_player_inventory(player_slot)
 	inventory.equipped_weapon = inventory.weapons["Baby Missile"]["Item"]
 	self.current_weapon = inventory.equipped_weapon
 	self.global_position = spawn_pos + Vector2(0 , -10)
@@ -83,12 +83,12 @@ func set_as_active(value: bool) -> void:
 	is_active = value
 	can_process_turn = value
 	if is_active:
-		var player_slot: String = Utils.get_tank_slot(self.name)
+		var player_slot: String = Utils.get_player_slot(self.name)
 		Events.emit_signal("tank_activated", power, angle, current_health, player_slot)
 
 func set_weapon(item: Item) -> void:
 	current_weapon = item
-	Events.emit_signal("tank_weapon_changed", Utils.get_tank_slot(self.name))
+	Events.emit_signal("tank_weapon_changed", Utils.get_player_slot(self.name))
 
 func set_current_health(value: int) -> void:
 	current_health = value

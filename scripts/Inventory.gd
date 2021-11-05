@@ -12,8 +12,16 @@ export (Dictionary) var defensive = {}
 
 var equipped_weapon: Item setget set_equipped_weapon, get_equipped_weapon
 
-func set_equipped_weapon(weapon: Item) -> void:
-	equipped_weapon = weapon
+func set_equipped_weapon(new_weapon: Item) -> void:
+	equipped_weapon = new_weapon
 
 func get_equipped_weapon() -> Item:
 	return equipped_weapon
+
+func get_weapon_amount(key: String) -> int:
+	var amount: int = weapons[key]["Amount"]
+	return amount
+
+func get_defense_item_amount(key: String) -> int:
+	var amount: int = defensive[key]["Amount"]
+	return amount

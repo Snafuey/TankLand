@@ -10,17 +10,17 @@ var num_of_tanks: int
 var rounds: int
 
 func _ready() -> void:
-	num_of_tanks = GameData.game_settings["NumOfTanks"]
-	rounds = GameData.game_settings["Rounds"]
+	num_of_tanks = Utils.get_total_tank_number()
+	rounds = Utils.get_total_rounds()
 	set_values()
 
 
 func set_values() -> void:
 	playersLabel.text = "Players:" + str(num_of_tanks)
-	GameData.game_settings["NumOfTanks"] = num_of_tanks
+	Utils.set_total_tank_number(num_of_tanks)
 	
 	roundsLabel.text = "Rounds:" + str(rounds)
-	GameData.game_settings["Rounds"] = rounds
+	Utils.set_total_rounds(rounds)
 
 
 func _on_StartButton_pressed() -> void:

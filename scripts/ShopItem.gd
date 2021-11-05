@@ -10,49 +10,41 @@ onready var itemPrice = $ItemHbox/ItemPriceStack
 export (Resource) var weapon_data
 export (Resource) var defensive_data
 
-var displayed_resource: Item
+var displayed_item: Item
 
 func _ready() -> void:
 	deselect_item()
-#	set_item_data(weapon_data)
 
-
-func change_item_type(type: String, player_inventory: Inventory) -> void:
-	match type:
-		"Weapon":
-			set_item_data(weapon_data)
-			update_item_qty(type, player_inventory)
-		"Defensive":
-			set_item_data(defensive_data)
-			update_item_qty(type, player_inventory)
-	deselect_item()
-
-
-func set_item_data(item: Item) -> void:
-	displayed_resource = item
-	itemIcon.texture = item.icon
-	itemName.text = item.name
-	itemPrice.text = "$" + str(item.cost) + "/" + str(item.purchase_stack)
-
-
-func update_item_qty(type: String, player_inventory: Inventory) -> void:
-	match type:
-		"Weapon":
-			itemQty.text = str(player_inventory.weapons[weapon_data.name]["Amount"])
-		"Defensive":
-			itemQty.text = str(player_inventory.defensive[defensive_data.name]["Amount"])
 
 func deselect_item() -> void:
 	itemButton.pressed = false
 	selectedArrow.visible = false
 
 
+func set_item_data(type: String, player_inventory: Inventory) -> void:
+	match type:
+		"Weapon":
+			itemQty.text = str(player_inventory.get_weapon_amount(weapon_data.name))
+			display_data(weapon_data)
+		"Defensive":
+			itemQty.text = str(player_inventory.get_defense_item_amount(defensive_data.name))
+			display_data(defensive_data)
+	
+
+func display_data(item: Item) -> void:
+	if displayed_item != item:
+		displayed_item = item
+		itemIcon.texture = item.icon
+		itemName.text = item.name
+		itemPrice.text = "$" + str(item.cost) + "/" + str(item.purchase_stack)
+		deselect_item()
+
+
 func _on_ItemButton_toggled(button_pressed: bool) -> void:
 	if button_pressed:
 		selectedArrow.visible = true
-		Events.emit_signal("shop_item_selected", displayed_resource)
-		var itemsContainer: VBoxContainer = get_parent()
-		var items: Array = itemsContainer.get_children()
-		for item in items:
-			if item.name != self.name:
-				item.deselect_item()
+		Events.emit_signal("shop_item_selected", displayed_item)
+		var item_slots: Array = get_parent().get_children()
+		for slot in item_slots:
+			if slot.name != self.name:
+				slot.deselect_item()

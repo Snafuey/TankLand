@@ -14,7 +14,6 @@ func append_damage_queue(tank: KinematicBody2D, damage: int) -> void:
 
 func apply_tank_damage(damage_data: Array) -> void:
 	var tank: KinematicBody2D = damage_data[0]
-	print(damage_data[1])
 	if tank.current_health > 0:
 		tank.current_health -= damage_data[1]
 	var keys: Array = damage_queue.keys()
@@ -25,13 +24,14 @@ func apply_tank_damage(damage_data: Array) -> void:
 func start_round() -> void:
 	active_tank = get_child(0)
 	active_tank.is_active = true	
+
 	
 func spawn_tanks(terrain_points: Array) -> void:
-	var players_to_spawn: Array = GameData.tank_data.keys()
-	var scaler: int = Utils.get_tank_num_scaler(terrain_points.size())
+	var players: Array = Utils.get_tank_data_keys()
+	var scaler: int = Utils.get_spawn_index_scaler(terrain_points.size())
 	var last_index: int
 	var spawn_index: int
-	for i in GameData.game_settings["NumOfTanks"]:
+	for i in Utils.get_total_tank_number():
 		if i == 0:
 			# warning-ignore:narrowing_conversion
 			var index: int = round(scaler / 2) # warning-ignore:integer_division
@@ -42,18 +42,18 @@ func spawn_tanks(terrain_points: Array) -> void:
 			last_index = index
 			spawn_index = Utils.get_random_spawn_index(index)
 		
-		players_to_spawn.shuffle()
-		var tank = load(Utils.get_tank_scene_path(players_to_spawn[0])).instance()
-		tank.set_script(load(Utils.get_tank_script_path(players_to_spawn[0])))
-		tank.init_spawn_data(players_to_spawn[0], terrain_points[spawn_index])
+		players.shuffle()
+		var tank = load(Utils.get_tank_scene_path(players[0])).instance()
+		tank.set_script(load(Utils.get_tank_script_path(players[0])))
+		tank.init_spawn_data(players[0], terrain_points[spawn_index])
 		self.add_child(tank)
-		players_to_spawn.pop_front()
+		players.pop_front()
 	
 	Events.emit_signal("turnQueue_tank_spawn_finished")
 
 
 func set_tank_order(turn_order: Array) -> void:
-	for i in GameData.game_settings["NumOfTanks"]:
+	for i in Utils.get_total_tank_number():
 		var tank: KinematicBody2D = get_node(Utils.build_tank_node_name(turn_order[i]))
 		move_child(tank, 0)
 	start_round()

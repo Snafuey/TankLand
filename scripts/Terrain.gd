@@ -70,9 +70,11 @@ func build_terrain(build_points: Array) -> void:
 
 
 func set_terrian_color() -> void:
-	var keys: Array = GameData.earth_colors.keys()
-	earth_color = GameData.earth_colors[keys[randi() % keys.size()]]
+	earth_color = Utils.get_random_terrian_color()
 	terrainPoly.color = earth_color
+#	var keys: Array = GameData.earth_colors.keys()
+#	earth_color = GameData.earth_colors[keys[randi() % keys.size()]]
+#	terrainPoly.color = earth_color
 
 
 func destroy_terrain(bullet_pos: Vector2, radius: int) -> void:

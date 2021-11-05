@@ -33,25 +33,29 @@ func new_tank_active(_power: int, _angle: float, _health: int, player_slot: Stri
 	change_name(player_slot)
 	change_weapon(player_slot)
 
+
 func change_power(value: int) -> void:
 	power.text = str(value)
+
 
 func change_angle(value: float) -> void:
 	angle.text = str(value).trim_prefix("-")
 
+
 func change_health(value: int) -> void:
 	health.text = str(value)
 
+
 func change_name(player_slot: String) -> void:
-	var player_name: String = Utils.get_player_name_from_slot(player_slot)
-	var color: Color = GameData.tank_data[player_slot]["Color"]
-	tankName.text = player_name
+	var color: Color = Utils.get_player_color(player_slot)
+	tankName.text = Utils.get_player_name(player_slot)
 	tankName.set("custom_colors/font_color", color)
+
 
 func change_weapon(player_slot: String) -> void:
 	var inventory: Inventory = Utils.get_player_inventory(player_slot)
-	var equipped_item: Item = inventory.get_equipped_weapon()
-	weaponIcon.texture = equipped_item.icon
-	var equipped_item_qty: int = inventory.weapons[equipped_item.name]["Amount"]
-	var weapon_text: String = ": " + str(equipped_item_qty) + " - " + equipped_item.name
+	var equipped_weapon: Item = inventory.get_equipped_weapon()
+	weaponIcon.texture = equipped_weapon.icon
+	var amount: int = inventory.get_weapon_amount(equipped_weapon.name)
+	var weapon_text: String = ": " + str(amount) + " - " + equipped_weapon.name
 	weaponLabel.text = weapon_text 

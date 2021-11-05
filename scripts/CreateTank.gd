@@ -9,10 +9,10 @@ onready var tankIcons: Control = $CenterContainer/UIPanel/TankIcons
 onready var doneButtonLabel: Label = $CenterContainer/UIPanel/DoneButton/Label
 onready var doneButton: TextureButton = $CenterContainer/UIPanel/DoneButton/Button
 
-var colors: Array = GameData.tank_colors.keys()
+#var colors: Array = GameData.tank_colors.keys()
 var color_index: int = 0
 
-var num_of_tanks: int = GameData.game_settings["NumOfTanks"]
+var num_of_tanks: int = Utils.get_total_tank_number()
 var current_player_number: int = 1
 var current_player_slot: String
 var selected_tank: String
@@ -43,8 +43,8 @@ func set_current_player_slot() -> void:
 
 
 func set_colors() -> void:
-	background.color = GameData.tank_colors[colors[color_index]]
-	tankIcons.modulate = GameData.tank_colors[colors[color_index]]
+	background.color = Utils.get_tank_color_by_index(color_index) #GameData.tank_colors[colors[color_index]]
+	tankIcons.modulate = Utils.get_tank_color_by_index(color_index) #GameData.tank_colors[colors[color_index]]
 
 
 func set_title_text() -> void:
@@ -60,9 +60,9 @@ func _on_Controller_button_down(type: String) -> void:
 
 
 func _on_DoneButton_pressed() -> void:
-	var player_list: Array = Utils.get_tank_data_player_keys()
-	for player in player_list:
-		if nameInput.text == GameData.tank_data[player]["Name"]:
+#	var player_list: Array = Utils.get_tank_data_keys()
+	for player in Utils.get_tank_data_keys():
+		if nameInput.text == Utils.get_player_name(player):
 			nameInput.text = "Name taken"
 			return
 	set_player_data()
@@ -71,7 +71,7 @@ func _on_DoneButton_pressed() -> void:
 func set_player_data() -> void:
 	GameData.tank_data[current_player_slot] = {
 		"Name": nameInput.text,
-		"Color": GameData.tank_colors[colors[color_index]],
+		"Color": Utils.get_tank_color_by_index(color_index), #GameData.tank_colors[colors[color_index]],
 		"Tank": selected_tank,
 		"Controller": controller,
 		"Money": GameData.game_settings["StartingMoney"],
@@ -79,7 +79,7 @@ func set_player_data() -> void:
 		"Kills": 0,
 		"Suicide": 0,
 		"TotalKills": 0 }
-	GameData.add_player_items_to_inventories(current_player_slot)
+	GameData.set_default_player_inventory(current_player_slot)
 	if current_player_number < num_of_tanks:
 		next_player_reset()
 	else:

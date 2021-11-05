@@ -12,6 +12,7 @@ func _ready() -> void:
 
 func _on_NewGameButton_pressed() -> void:
 	GameData.clear_tank_data()
+	GameData.clear_inventories()
 	Events.emit_signal("change_game_state", GameData.GAME_STATES.MAIN_MENU)
 	self.queue_free()
 
@@ -51,7 +52,7 @@ func add_sort_items() -> void:
 	sortOptions.add_item(" Last Round")
 
 func hide_lines_unused() -> void:
-	var hide_total = 7 - GameData.game_settings["NumOfTanks"]
+	var hide_total = 7 - Utils.get_total_tank_number()
 	var hide_index = (7 - hide_total) - 1
 	var rankLine = rankLines.get_children()
 	for i in hide_total:
@@ -63,8 +64,7 @@ func build_ranks(type: String) -> void:
 	player_ranks.sort_custom(Utils, "sort_decending")
 
 func set_rank_data() -> void:
-	var total_players: int = GameData.game_settings["NumOfTanks"]
-	for i in total_players:
+	for i in Utils.get_total_tank_number():
 			var lineStats = get_node("CenterContainer/UIPanel/RankLines/" + str(i + 1)).get_children()
 			for j in lineStats.size():
 				var stat = lineStats[j]

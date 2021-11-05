@@ -32,7 +32,7 @@ func set_banner_color() -> void:
 	colorRectRight.color = colorRectLeft.color
 
 func hide_lines_unused() -> void:
-	var hide_total = 7 - GameData.game_settings["NumOfTanks"]
+	var hide_total = 7 - Utils.get_total_tank_number()
 	var hide_index = (7 - hide_total) - 1
 	var rankLine = rankLines.get_children()
 	for i in hide_total:
@@ -40,7 +40,7 @@ func hide_lines_unused() -> void:
 		rankLine[hide_index].visible = false
 
 func set_rank_data() -> void:
-	var total_players: int = GameData.game_settings["NumOfTanks"]
+	var total_players: int = Utils.get_total_tank_number()
 	for i in total_players:
 			var lineStats = get_node("CenterContainer/UIPanel/RankLines/" + str(i + 1)).get_children()
 			for j in lineStats.size():
