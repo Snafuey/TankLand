@@ -1,7 +1,5 @@
 extends Control
 
-signal start_new_round()
-
 onready var colorRectLeft = $CenterContainer/UIPanel/ColorRectLeft
 onready var colorRectRight = $CenterContainer/UIPanel/ColorRectRight
 onready var rankLines = $CenterContainer/UIPanel/RankLines
@@ -21,14 +19,15 @@ func init_rankings() -> void:
 	set_banner_color()
 	hide_lines_unused()
 	set_rank_data()
-	set_remaining_rounds()
+	set_rounds()
 
 func build_ranks(type: String) -> void:
-	player_ranks = Utils.get_tank_data_by_type(type)
+	player_ranks = Utils.get_stats_by_type(type)
 	player_ranks.sort_custom(Utils, "sort_decending")
 
 func set_banner_color() -> void:
-	colorRectLeft.color = GameData.tank_data[player_ranks[0][1]]["Color"]
+	colorRectLeft.color = Utils.get_player_color(player_ranks[0][1])
+#	colorRectLeft.color = GameData.tank_data[player_ranks[0][1]]["Color"]
 	colorRectRight.color = colorRectLeft.color
 
 func hide_lines_unused() -> void:
@@ -49,16 +48,20 @@ func set_rank_data() -> void:
 					0:
 						pass
 					1:
-						stat.text = GameData.tank_data[player_ranks[i][1]]["Name"]
+						stat.text = Utils.get_player_name(player_ranks[i][1])
+						#GameData.tank_data[player_ranks[i][1]]["Name"]
 					2:
-						stat.text = str(GameData.tank_data[player_ranks[i][1]]["Kills"])
+						stat.text = str(Utils.get_player_kills(player_ranks[i][1]))
+						#str(GameData.tank_data[player_ranks[i][1]]["Kills"])
 					3:
-						stat.text = "$" + str(GameData.tank_data[player_ranks[i][1]]["Earnings"])
+						stat.text = "$" + str(Utils.get_player_earnings(player_ranks[i][1]))
+						#str(GameData.tank_data[player_ranks[i][1]]["Earnings"])
 
-func set_remaining_rounds() -> void:
-	var current_round: int = get_parent().get_node("BattleField").get_current_round()
-	var remaining_rounds = GameData.game_settings["Rounds"] - current_round
-	if remaining_rounds == 1:
-		roundsRemaining.text = str(remaining_rounds) + " round remains."
-	else:
-		roundsRemaining.text = str(remaining_rounds) + " rounds remain."
+func set_rounds() -> void:
+	var battleMain: Node = get_parent().get_node_or_null("BattleField")
+	if battleMain:
+		var rounds_left = Utils.get_remaining_rounds(battleMain.current_round)
+		if rounds_left == 1:
+			roundsRemaining.text = str(rounds_left) + " round remains."
+		else:
+			roundsRemaining.text = str(rounds_left) + " rounds remain."

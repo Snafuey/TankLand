@@ -1,5 +1,7 @@
 extends Node
 
+const INVENTORY_SCENE = preload("res://scenes/menus/Inventory.tscn")
+
 onready var turnQueue: Node = $TurnQueue
 onready var terrain: Node = $Terrain
 onready var walls: Node = $Walls
@@ -7,7 +9,7 @@ onready var battleHud: Node = $BattleHud
 
 var death_order: Array = [] #Player slot index 0 is 1st place
 var total_rounds: int
-var current_round: int = 0 setget set_current_round
+var current_round: int = 0 setget set_current_round, get_current_round
 var current_walls: String setget set_walls
 
 func _ready() -> void:
@@ -21,6 +23,9 @@ func _ready() -> void:
 	if err:
 		printerr("Connection Failed " + str(err))
 	err = Events.connect("turnQueue_round_finished", self, "end_round" )
+	if err:
+		printerr("Connection Failed " + str(err))
+	err = Events.connect("inventory_toggled", self, "toggle_inventory")
 	if err:
 		printerr("Connection Failed " + str(err))
 	total_rounds = GameData.game_settings["Rounds"]
@@ -85,6 +90,18 @@ func end_round(tank: KinematicBody2D) -> void:
 		return
 	Events.emit_signal("change_game_state", GameData.GAME_STATES.ROUND_RANKING)
 
+
+func toggle_inventory(player_slot: String) -> void:
+	var is_open: Node = get_node_or_null("Inventory")
+	if is_open:
+		is_open.queue_free()
+		var active_tank: KinematicBody2D = turnQueue.active_tank
+		active_tank.allow_inputs = true
+		return
+	var inventory = INVENTORY_SCENE.instance()
+	inventory.assign_player_slot(player_slot)
+	self.add_child(inventory)
+	
 func queue_tanks(tanks: Array) -> void:
 	for tank in tanks:
 		tank.queue_free()

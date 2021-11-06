@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 	if collision:
 		var body: Object = collision.get_collider()
 		if body.is_in_group("walls"): 
-			if GameData.game_settings["CurrentWalls"] == "Bounce":
+			if Utils.get_current_walls() == "Bounce":
 				velocity = velocity.bounce(collision.normal)
 			else:
 				handle_collision(body)

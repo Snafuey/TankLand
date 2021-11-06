@@ -53,18 +53,17 @@ func set_game_state(new_state: int) -> void:
 			animPlayer.play("fade_to_normal")
 		
 		GameData.GAME_STATES.BATTLE:
-			var rng_index: int = Utils.get_random_index_range(
-				0, (GameData.battle_music.size() - 1))
+			var rng_index: int = Utils.get_random_index_range(0, (GameData.battle_music.size() - 1))
 			soundManager.change_music(load(GameData.battle_music[rng_index]), -30, 2)
 			match previous_state:
 				GameData.GAME_STATES.ROUND_RANKING: 
-					GameData.new_round_set_tank_data()
+					Utils.set_new_round_data()
 					var battleMain: Node = currentScene.get_child(0)
 					battleMain.current_round += 1
 					battleMain.init_new_battle()
 					return
 				GameData.GAME_STATES.FINAL_SCORE:
-					GameData.replay_game_set_tank_data()
+					Utils.set_replay_game_data()
 					var battleMain: Node = currentScene.get_child(0)
 					battleMain.current_round = 1
 					battleMain.init_new_battle()

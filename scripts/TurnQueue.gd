@@ -1,6 +1,6 @@
 extends Node
 
-var active_tank: KinematicBody2D
+var active_tank: KinematicBody2D setget ,get_active_tank
 var damage_queue: Dictionary
 
 func _ready() -> void:
@@ -93,3 +93,6 @@ func end_round() -> void:
 
 func get_active_tank_name() -> String:
 	return active_tank.name
+
+func get_active_tank() -> KinematicBody2D:
+	return active_tank

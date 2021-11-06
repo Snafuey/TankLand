@@ -39,8 +39,13 @@ func set_new_player() -> void:
 		return
 	player_slot = player_list[0]
 	player_inventory = Utils.get_player_inventory(player_slot)
-	set_header_text()
 	typeButtonWeapon.pressed = true
+	set_header_text()
+	update_item_slots()
+	clear_inspector()
+	disable_buy_button()
+
+	
 
 
 func set_header_text() -> void:
@@ -50,29 +55,28 @@ func set_header_text() -> void:
 	playerName.set("custom_colors/font_color", Utils.get_player_color(player_slot))
 	backGround.color = Utils.get_player_color(player_slot)
 	set_cash_amount()
-	set_remaining_rounds()
+	set_rounds()
 
 
 func set_cash_amount() -> void:
-	playerCash.text = "$" + str(GameData.tank_data[player_slot]["Money"])
+	playerCash.text = "$" + str(Utils.get_player_money(player_slot))
 
 
-func set_remaining_rounds() -> void:
+func set_rounds() -> void:
 	var battleMain: Node = get_parent().get_node_or_null("BattleField")
 	if battleMain:
-		var current_round: int = battleMain.get_current_round()
-		var remaining_rounds: int = GameData.game_settings["Rounds"] - current_round
-		if remaining_rounds == 1:
-			roundsRemaining.text = str(remaining_rounds) + " Round Remains."
+		var rounds_left: int = Utils.get_remaining_rounds(battleMain.current_round)
+		if rounds_left == 1:
+			roundsRemaining.text = str(rounds_left) + " Round Remains."
 		else:
-			roundsRemaining.text = str(remaining_rounds) + " Rounds Remain."
+			roundsRemaining.text = str(rounds_left) + " Rounds Remain."
 	else:
-		roundsRemaining.text = str(GameData.game_settings["Rounds"]) + " Rounds Remain."
+		roundsRemaining.text = str(Utils.get_total_rounds()) + " Rounds Remain."
 
 
 func item_selected(item: Item) -> void:
 	selected_item = item
-	if GameData.tank_data[player_slot]["Money"] >= selected_item.cost:
+	if Utils.get_player_money(player_slot) >= selected_item.cost:
 		enable_buy_button()
 	set_inspector()
 
@@ -127,12 +131,12 @@ func _on_Purchase_Button_pressed() -> void:
 	match selected_item_type:
 		"Weapon":
 			player_inventory.weapons[selected_item.name]["Amount"] += selected_item.purchase_stack
-			GameData.tank_data[player_slot]["Money"] -= selected_item.cost
+			Utils.decrease_player_money(player_slot, selected_item.cost)
 			set_cash_amount()
 			update_item_slots()
 		"Defensive":
 			pass
-	if selected_item.cost > GameData.tank_data[player_slot]["Money"]:
+	if selected_item.cost > Utils.get_player_money(player_slot):
 		disable_buy_button()
 
 
@@ -140,8 +144,8 @@ func _on_DoneButton_pressed() -> void:
 	player_list.pop_front()
 	if player_list.size() > 0:
 		self.visible = false
+		set_new_player()
 		yield(get_tree().create_timer(0.25), "timeout")
 		self.visible = true
-		set_new_player()
 	else:
 		Events.emit_signal("change_game_state", GameData.GAME_STATES.BATTLE)

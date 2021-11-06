@@ -8,8 +8,10 @@ onready var weaponLabel: Label = $Hud/MarginContainer/VBox/Row1/WeaponLabel
 onready var maxPower: Label = $Hud/MarginContainer/VBox/Row2/Max
 onready var health: Label = $Hud/MarginContainer/VBox/Row2/Health
 
+var active_inventory: Inventory
+
 func _ready() -> void:
-	var err: int = Events.connect("tank_activated", self, "new_tank_active")
+	var err: int = Events.connect("new_active_tank", self, "new_tank_active")
 	if err:
 		printerr("Connection Failed " + str(err))
 	err = Events.connect("tank_angle_changed", self, "change_angle")
@@ -27,11 +29,12 @@ func _ready() -> void:
 
 
 func new_tank_active(_power: int, _angle: float, _health: int, player_slot: String) -> void:
+	active_inventory = Utils.get_player_inventory(player_slot)
 	change_power(_power)
 	change_angle(_angle)
 	change_health(_health)
 	change_name(player_slot)
-	change_weapon(player_slot)
+	change_weapon(active_inventory.equipped_weapon)
 
 
 func change_power(value: int) -> void:
@@ -47,15 +50,13 @@ func change_health(value: int) -> void:
 
 
 func change_name(player_slot: String) -> void:
-	var color: Color = Utils.get_player_color(player_slot)
+#	var color: Color = Utils.get_player_color(player_slot)
 	tankName.text = Utils.get_player_name(player_slot)
-	tankName.set("custom_colors/font_color", color)
+	tankName.set("custom_colors/font_color", Utils.get_player_color(player_slot))
 
 
-func change_weapon(player_slot: String) -> void:
-	var inventory: Inventory = Utils.get_player_inventory(player_slot)
-	var equipped_weapon: Item = inventory.get_equipped_weapon()
-	weaponIcon.texture = equipped_weapon.icon
-	var amount: int = inventory.get_weapon_amount(equipped_weapon.name)
-	var weapon_text: String = ": " + str(amount) + " - " + equipped_weapon.name
-	weaponLabel.text = weapon_text 
+func change_weapon(item: Item) -> void:
+	if active_inventory:
+		weaponIcon.texture = item.icon
+		var amount: int = active_inventory.get_weapon_amount(item.name)
+		weaponLabel.text = ": " + str(amount) + " - " + item.name

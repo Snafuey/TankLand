@@ -11,13 +11,13 @@ func _ready() -> void:
 
 
 func _on_NewGameButton_pressed() -> void:
-	GameData.clear_tank_data()
-	GameData.clear_inventories()
+	Utils.clear_tank_data()
+	Utils.clear_inventories()
 	Events.emit_signal("change_game_state", GameData.GAME_STATES.MAIN_MENU)
 	self.queue_free()
 
 func _on_ReplayButton_pressed() -> void:
-	GameData.replay_game_set_tank_data()
+	Utils.set_replay_game_data()
 	Events.emit_signal("change_game_state", GameData.GAME_STATES.BATTLE)
 	self.queue_free()
 
@@ -60,7 +60,7 @@ func hide_lines_unused() -> void:
 		rankLine[hide_index].visible = false
 
 func build_ranks(type: String) -> void:
-	player_ranks = Utils.get_tank_data_by_type(type)
+	player_ranks = Utils.get_stats_by_type(type)
 	player_ranks.sort_custom(Utils, "sort_decending")
 
 func set_rank_data() -> void:

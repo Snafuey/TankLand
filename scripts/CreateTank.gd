@@ -79,7 +79,7 @@ func set_player_data() -> void:
 		"Kills": 0,
 		"Suicide": 0,
 		"TotalKills": 0 }
-	GameData.set_default_player_inventory(current_player_slot)
+	Utils.set_default_inventory(current_player_slot)
 	if current_player_number < num_of_tanks:
 		next_player_reset()
 	else:

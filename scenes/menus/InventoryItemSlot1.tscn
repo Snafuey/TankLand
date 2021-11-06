@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/fonts/RobotoBold14.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/sprites/Inventory Hover.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/Inventory Selected.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/weapon icons/Nuke Icon.png" type="Texture" id=4]
+[ext_resource path="res://scripts/InventoryItemSlot.gd" type="Script" id=5]
+
+[node name="InventoryItemSlot1" type="CenterContainer" groups=[
+"inventorySlot",
+]]
+margin_right = 42.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 52, 21 )
+mouse_filter = 2
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemButton" type="TextureButton" parent="."]
+margin_right = 52.0
+margin_bottom = 21.0
+rect_min_size = Vector2( 52, 21 )
+toggle_mode = true
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 2 )
+
+[node name="HBox" type="HBoxContainer" parent="."]
+margin_left = 5.0
+margin_top = 1.0
+margin_right = 47.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 42, 19 )
+mouse_filter = 2
+
+[node name="Qty" type="Label" parent="HBox"]
+margin_right = 16.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 16, 19 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "99"
+
+[node name="Icon" type="TextureRect" parent="HBox"]
+margin_left = 20.0
+margin_right = 42.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 22, 19 )
+mouse_filter = 2
+texture = ExtResource( 4 )
+stretch_mode = 4
+
+[connection signal="toggled" from="ItemButton" to="." method="_on_ItemButton_toggled"]
