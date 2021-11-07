@@ -1,15 +1,17 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://scripts/Item.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/weapon icons/Missile Icon.png" type="Texture" id=2]
+[ext_resource path="res://scenes/projectiles/explosions/Missile.tscn" type="PackedScene" id=3]
 
 [resource]
 script = ExtResource( 1 )
 type = 0
 name = "Missile"
-details = "This is a test and will still need to be added to every item at the time of creating it. I hope this works well."
+details = "Projectile flight is the same as the Baby Missile but has a bigger explosion radius. A cheap way to get more kills when your aim is slightly off."
 damage = 100
-explosion_rad = 40
+explosion_rad = 20
+explosion_scene = ExtResource( 3 )
 icon = ExtResource( 2 )
 cost = 1875
 purchase_stack = 5

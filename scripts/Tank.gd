@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+const MAX_TRAJECTORY_POINTS: int = 300
 const PROJECTILE = preload("res://scenes/projectiles/Projectile.tscn")
 const SHOOT_SFX = preload("res://assets/audio/heavy-artillery-shot.wav")
 
@@ -70,7 +71,6 @@ func shoot() -> void:
 	
 func check_ammo(inventory: Inventory) -> bool:
 	var ammo_amount: int = inventory.get_weapon_amount(inventory.equipped_weapon.name)
-	print(ammo_amount)
 	if ammo_amount > 0:
 		return true
 	return false
@@ -109,18 +109,25 @@ func die() -> void:
 	self.queue_free()
 
 
-#var max_points: int = 300
-#func _process(delta: float) -> void:
-#	if is_active:
-#		line.visible = true
-#		line.set_as_toplevel(true)
-#		line.clear_points()
-#		var angle_rad: float = deg2rad(angle)
-#		var pos: Vector2 = muzzel.global_position
-#		var vel: Vector2 = Vector2(cos(angle_rad), sin(angle_rad)) * power
-#		for i in max_points:
-#			line.add_point(pos)
-#			vel.y += GameData.GRAVITY * delta
-#			pos += vel * delta
-#	else:
-#		line.visible = false
+
+func _process(delta: float) -> void:
+	if !Utils.DEBUG_MODE:
+		line.visible = false
+		return
+		
+	if !is_active:
+		line.visible = false
+		return
+	
+	line.visible = true
+	line.set_as_toplevel(true)
+	line.clear_points()
+	var angle_rad: float = deg2rad(angle)
+	var pos: Vector2 = muzzel.global_position
+	var vel: Vector2 = Vector2(cos(angle_rad), sin(angle_rad)) * power
+	for i in MAX_TRAJECTORY_POINTS:
+		line.add_point(pos)
+		vel.y += GameData.GRAVITY * delta
+		pos += vel * delta
+
+		

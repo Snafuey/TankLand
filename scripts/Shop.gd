@@ -130,7 +130,7 @@ func _on_Defensive_toggled(button_pressed: bool) -> void:
 func _on_Purchase_Button_pressed() -> void:
 	match selected_item_type:
 		"Weapon":
-			player_inventory.weapons[selected_item.name]["Amount"] += selected_item.purchase_stack
+			player_inventory.add_weapon_ammo(selected_item.name, selected_item.purchase_stack)
 			Utils.decrease_player_money(player_slot, selected_item.cost)
 			set_cash_amount()
 			update_item_slots()

@@ -8,9 +8,9 @@
 script = ExtResource( 1 )
 type = 0
 name = "Nuke"
-details = "This is a test and will still need to be added to every item at the time of creating it. I hope this works well."
+details = "Projectile flight is the same as the Baby Missile but has a massive explosion radius. Use this when your aim is trash or when you want to destroy everything. Careful not to kill yourself."
 damage = 100
-explosion_rad = 115
+explosion_rad = 75
 explosion_scene = ExtResource( 3 )
 icon = ExtResource( 2 )
 cost = 12000

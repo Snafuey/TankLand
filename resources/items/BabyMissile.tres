@@ -8,9 +8,9 @@
 script = ExtResource( 1 )
 type = 0
 name = "Baby Missile"
-details = "This is a test and will still need to be added to every item at the time of creating it. I hope this works well."
+details = "The most basic weapon with a balistic arch trajectory and a small explosion radius."
 damage = 100
-explosion_rad = 20
+explosion_rad = 10
 explosion_scene = ExtResource( 3 )
 icon = ExtResource( 2 )
 cost = 400

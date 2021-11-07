@@ -93,11 +93,12 @@ func end_round(tank: KinematicBody2D) -> void:
 
 func toggle_inventory(player_slot: String) -> void:
 	var is_open: Node = get_node_or_null("Inventory")
+	var active_tank: KinematicBody2D = turnQueue.active_tank
 	if is_open:
 		is_open.queue_free()
-		var active_tank: KinematicBody2D = turnQueue.active_tank
 		active_tank.allow_inputs = true
 		return
+	active_tank.allow_inputs = false
 	var inventory = INVENTORY_SCENE.instance()
 	inventory.assign_player_slot(player_slot)
 	self.add_child(inventory)

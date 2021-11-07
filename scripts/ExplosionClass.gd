@@ -25,7 +25,7 @@ func _on_Explosion_body_entered(body: Node) -> void:
 	if body.is_in_group("tank"):
 		# warning-ignore:narrowing_conversion
 		var damage: int = round(calculate_damage(body)) 
-		emit_signal("explosion_hit_tank", body, damage )
+		emit_signal("explosion_hit_tank", body, damage)
 
 
 func calculate_damage(tank: KinematicBody2D) -> float:

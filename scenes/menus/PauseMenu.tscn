@@ -1,0 +1,129 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/menus/MenuButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/sprites/Popup Menu Container.png" type="Texture" id=2]
+[ext_resource path="res://scripts/PauseMenu.gd" type="Script" id=3]
+[ext_resource path="res://assets/fonts/RobotoBold24.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/fonts/RobotoBold14.tres" type="DynamicFont" id=5]
+
+[node name="PauseMenu" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Center" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Window" type="NinePatchRect" parent="Center"]
+margin_left = 405.0
+margin_top = 170.0
+margin_right = 555.0
+margin_bottom = 370.0
+rect_min_size = Vector2( 150, 200 )
+texture = ExtResource( 2 )
+patch_margin_left = 6
+patch_margin_top = 5
+patch_margin_right = 6
+patch_margin_bottom = 5
+
+[node name="Margin" type="MarginContainer" parent="Center/Window"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 12
+custom_constants/margin_top = 12
+custom_constants/margin_left = 12
+custom_constants/margin_bottom = 12
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="Center/Window/Margin"]
+margin_left = 12.0
+margin_top = 12.0
+margin_right = 138.0
+margin_bottom = 188.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Center/Window/Margin/VBox"]
+margin_right = 126.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "PAUSED"
+align = 1
+valign = 1
+
+[node name="DebugToggle" parent="Center/Window/Margin/VBox" instance=ExtResource( 1 )]
+margin_top = 37.0
+margin_right = 126.0
+margin_bottom = 61.0
+
+[node name="Label" parent="Center/Window/Margin/VBox/DebugToggle" index="1"]
+text = "Debug Mode: Off"
+
+[node name="ChangeRadius" parent="Center/Window/Margin/VBox" instance=ExtResource( 1 )]
+margin_top = 65.0
+margin_right = 126.0
+margin_bottom = 89.0
+
+[node name="Label" parent="Center/Window/Margin/VBox/ChangeRadius" index="1"]
+text = "Test Radius"
+
+[node name="PopInputRadius" type="AcceptDialog" parent="Center"]
+margin_left = 400.0
+margin_top = 226.0
+margin_right = 560.0
+margin_bottom = 314.0
+rect_min_size = Vector2( 160, 80 )
+window_title = "Input Size Radius"
+
+[node name="Margin" type="MarginContainer" parent="Center/PopInputRadius"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -36.0
+custom_constants/margin_top = 15
+custom_constants/margin_left = 18
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RadiusInput" type="LineEdit" parent="Center/PopInputRadius/Margin"]
+margin_left = 18.0
+margin_top = 15.0
+margin_right = 124.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 106, 29 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Not Valid #"
+align = 1
+max_length = 11
+expand_to_text_length = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Center/Window/Margin/VBox/DebugToggle/Button" to="." method="_on_DebugButton_pressed"]
+[connection signal="pressed" from="Center/Window/Margin/VBox/ChangeRadius/Button" to="." method="_on_RadiusButton_pressed"]
+[connection signal="confirmed" from="Center/PopInputRadius" to="." method="_on_PopInput_confirmed"]
+
+[editable path="Center/Window/Margin/VBox/DebugToggle"]
+[editable path="Center/Window/Margin/VBox/ChangeRadius"]

@@ -3,7 +3,6 @@ extends KinematicBody2D
 signal bullet_finished()
 signal direct_hit(tank_ref, damage_value) # warning-ignore:unused_signal
 
-const SMALL_EXPLOSION = preload("res://scenes/effects/SmallExplosion.tscn")
 
 export(int) var radius = 20
 #export(int) var damage = 100

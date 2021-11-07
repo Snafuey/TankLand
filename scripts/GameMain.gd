@@ -23,6 +23,10 @@ func change_state(new_state: int) -> void:
 func set_game_state(new_state: int) -> void:
 	var previous_state: int = state
 	state = new_state
+	if previous_state == GameData.GAME_STATES.PAUSE:
+		get_tree().paused = false
+		return
+	
 	match state:
 		GameData.GAME_STATES.MAIN_MENU:
 			soundManager.change_music(MAIN_MENU_MUSIC, 0, 5)
@@ -81,11 +85,21 @@ func set_game_state(new_state: int) -> void:
 			currentScene.add_child_path("res://scenes/menus/Rankings.tscn")
 		
 		GameData.GAME_STATES.PAUSE:
-			pass
-		
+			currentScene.add_child_path("res://scenes/menus/PauseMenu.tscn")
+			var pauseMenu: Node = currentScene.get_node("PauseMenu")
+			pauseMenu.set_return_state(previous_state)
+			get_tree().paused = true
+
 		GameData.GAME_STATES.FINAL_SCORE:
 			soundManager.change_music(MAIN_MENU_MUSIC, 0, 3)
 			currentScene.add_child_path("res://scenes/menus/FinalScore.tscn")
 
 func get_game_state() -> int:
 	return state
+
+func _unhandled_key_input(event: InputEventKey) -> void:
+	if event.is_action_released("pause"):
+		get_tree().set_input_as_handled()
+		self.state = GameData.GAME_STATES.PAUSE
+		
+

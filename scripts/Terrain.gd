@@ -114,9 +114,12 @@ func build_new_polygons(bullet_pos: Vector2, radius: int, type: Node) -> void:
 					collider.polygon = newPoints
 					type.call_deferred("add_child", collider)
 
-#USE FOR TESTING
-#func _input(event) -> void:
-#	if event is InputEventMouseButton and event.pressed:
-#		init_new_terrain()
-#		var pos: Vector2 = get_viewport().get_mouse_position()
-#		destroy_terrain(pos, 20)
+
+func _input(event) -> void:
+	if Utils.DEBUG_MODE:
+		if event.is_action_released("mouse_btn_left"):
+			get_tree().set_input_as_handled()
+			init_new_terrain()
+		if event.is_action_released("mouse_btn_right"):
+			var mouse_position: Vector2 = get_viewport().get_mouse_position()
+			destroy_terrain(mouse_position, 20)

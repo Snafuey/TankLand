@@ -1,4 +1,18 @@
 extends Node
+var DEBUG_MODE: bool = false setget set_debug_mode, get_debug_mode
+var DEBUG_RADIUS_SIZE: int = 10 setget set_debug_radius, get_debug_radius
+
+func set_debug_mode(value: bool) -> void:
+	DEBUG_MODE = value
+
+func get_debug_mode() -> bool:
+	return DEBUG_MODE
+
+func set_debug_radius(value: int) -> void:
+	DEBUG_RADIUS_SIZE = value
+
+func get_debug_radius() -> int:
+	return DEBUG_RADIUS_SIZE
 
 """
 Get Player Data

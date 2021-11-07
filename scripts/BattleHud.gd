@@ -3,12 +3,13 @@ extends CanvasLayer
 onready var power: Label = $Hud/MarginContainer/VBox/Row1/Power
 onready var angle: Label = $Hud/MarginContainer/VBox/Row1/Angle
 onready var tankName: Label = $Hud/MarginContainer/VBox/Row1/Name
-onready var weaponIcon: TextureRect = $Hud/MarginContainer/VBox/Row1/WeaponIcon
-onready var weaponLabel: Label = $Hud/MarginContainer/VBox/Row1/WeaponLabel
+onready var weaponIcon: TextureRect = $Hud/MarginContainer/VBox/Row1/WeaponButton/HBox/WeaponIcon
+onready var weaponLabel: Label = $Hud/MarginContainer/VBox/Row1/WeaponButton/HBox/WeaponLabel
 onready var maxPower: Label = $Hud/MarginContainer/VBox/Row2/Max
 onready var health: Label = $Hud/MarginContainer/VBox/Row2/Health
 
 var active_inventory: Inventory
+var active_player_slot: String
 
 func _ready() -> void:
 	var err: int = Events.connect("new_active_tank", self, "new_tank_active")
@@ -30,6 +31,7 @@ func _ready() -> void:
 
 func new_tank_active(_power: int, _angle: float, _health: int, player_slot: String) -> void:
 	active_inventory = Utils.get_player_inventory(player_slot)
+	active_player_slot = player_slot
 	change_power(_power)
 	change_angle(_angle)
 	change_health(_health)
@@ -50,7 +52,6 @@ func change_health(value: int) -> void:
 
 
 func change_name(player_slot: String) -> void:
-#	var color: Color = Utils.get_player_color(player_slot)
 	tankName.text = Utils.get_player_name(player_slot)
 	tankName.set("custom_colors/font_color", Utils.get_player_color(player_slot))
 
@@ -60,3 +61,7 @@ func change_weapon(item: Item) -> void:
 		weaponIcon.texture = item.icon
 		var amount: int = active_inventory.get_weapon_amount(item.name)
 		weaponLabel.text = ": " + str(amount) + " - " + item.name
+
+
+func _on_WeaponButton_pressed() -> void:
+	Events.emit_signal("inventory_toggled", active_player_slot)
