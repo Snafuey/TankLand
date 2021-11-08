@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/battle-music-3.ogg-5c64d13b96245cb33e3f2e802187584b.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/music/battle-music-3.ogg"
+dest_files=[ "res://.import/battle-music-3.ogg-5c64d13b96245cb33e3f2e802187584b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

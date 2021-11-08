@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 const MAX_TRAJECTORY_POINTS: int = 300
 const PROJECTILE = preload("res://scenes/projectiles/Projectile.tscn")
-const SHOOT_SFX = preload("res://assets/audio/heavy-artillery-shot.wav")
+const SHOOT_SFX = preload("res://assets/audio/tank/fire-artillery.wav")
 
 onready var tankSprite: Sprite = $TankSprite
 onready var barrel: Sprite = $TankSprite/Barrel
@@ -94,11 +94,15 @@ func set_current_health(value: int) -> void:
 func set_power(value: int) -> void:
 	power = value
 	power = clamp(power, 1, 500) # warning-ignore:narrowing_conversion
+	tankSFX.stream = GameData.power_SFX_list[Utils.get_rng_index(GameData.power_SFX_list.size())]
+	tankSFX.play()
 	Events.emit_signal("tank_power_changed", power)
 
 func set_angle(value: float) -> void:
 	angle = value
 	angle = clamp(angle, -180, 0)
+	tankSFX.stream = GameData.angle_SFX_list[Utils.get_rng_index(GameData.angle_SFX_list.size())]
+	tankSFX.play()
 	Events.emit_signal("tank_angle_changed", angle)
 
 func finish_turn() -> void:

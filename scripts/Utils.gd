@@ -151,14 +151,14 @@ Get Random Results
 """
 
 static func get_random_terrian_color() -> Color:
-	var color: Color = GameData.terrain_colors[get_random_index_range(0, 
-		GameData.terrain_colors.size() - 1)]
+	var color: Color = GameData.terrain_colors[get_rng_index(
+		GameData.terrain_colors.size())]
 	return color
 
 static func get_random_wall_type() -> String:
 	var walls_list: Array = GameData.game_settings["Walls"]
 	walls_list.erase("Random")
-	var random_wall: String = walls_list[Utils.get_random_index_range(0 , walls_list.size() - 1)]
+	var random_wall: String = walls_list[get_rng_index(walls_list.size())]
 	return random_wall
 
 static func get_random_spawn_index(index: int) -> int:
@@ -166,9 +166,9 @@ static func get_random_spawn_index(index: int) -> int:
 	var new_index: int = round(index + rand_range(-9 , 9)) # warning-ignore:narrowing_conversion
 	return new_index
 
-static func get_random_index_range(start: int, end: int) -> int:
+static func get_rng_index(size: int) -> int:
 	randomize()
-	var new_index: int = round(rand_range(start, end)) # warning-ignore:narrowing_conversion
+	var new_index: int = randi() % size
 	return new_index
 
 """

@@ -1,8 +1,5 @@
 extends Control
 
-const TANK_CREATION: String = "res://scenes/menus/TankCreationMenu.tscn"
-const TANK_CREATION_MUSIC: AudioStream = preload("res://assets/audio/TrankCreationMenu.wav")
-
 onready var playersLabel: Label = $HBox/ButtonContainerRect/MarginContainer/VBox/PlayersHBox/PlayersLabel
 onready var roundsLabel: Label = $HBox/ButtonContainerRect/MarginContainer/VBox/RoundsHBox/RoundsLabel
 

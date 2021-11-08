@@ -1,3 +1,4 @@
+class_name SceneManager
 extends Node
 
 func queue_child_index(index: int) -> void:

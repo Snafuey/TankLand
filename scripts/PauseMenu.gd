@@ -1,6 +1,6 @@
 extends Control
 
-onready var debugToggleLabel: Label = $Center/Window/Margin/VBox/DebugToggle/Label
+onready var debugButton: Button = $Center/Window/Margin/VBox/DebugButton
 onready var radiusPopWindow: AcceptDialog = $Center/PopInputRadius
 onready var radiusInput: LineEdit = $Center/PopInputRadius/Margin/RadiusInput
 
@@ -22,9 +22,9 @@ func _input(event: InputEvent) -> void:
 
 func set_debug_text() -> void:
 	if Utils.DEBUG_MODE:
-		debugToggleLabel.text = "Debug Mode: On"
+		debugButton.text = "Debug Mode: On"
 		return
-	debugToggleLabel.text = "Debug Mode: Off"
+	debugButton.text = "Debug Mode:Off"
 
 
 func _on_DebugButton_pressed() -> void:

@@ -44,7 +44,7 @@ __meta__ = {
 
 [node name="VBox" type="VBoxContainer" parent="HBox/ButtonContainerRect/MarginContainer"]
 margin_right = 198.0
-margin_bottom = 567.0
+margin_bottom = 506.0
 custom_constants/separation = 13
 __meta__ = {
 "_edit_use_anchors_": false

@@ -97,7 +97,6 @@ script = ExtResource( 2 )
 script = ExtResource( 3 )
 
 [node name="GameMusicPlayer" type="AudioStreamPlayer" parent="GameSoundManager"]
-volume_db = -40.0
 bus = "Music"
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="GameSoundManager"]

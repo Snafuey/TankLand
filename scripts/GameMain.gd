@@ -1,12 +1,8 @@
 extends Node
 
-#can const all scences and music/sounds that this script sets
-const MAIN_MENU_MUSIC: = preload("res://assets/audio/MainMenuMusic.ogg")
-const TANK_CREATION_MUSIC = preload("res://assets/audio/TrankCreationMenu.wav")
-
-onready var currentScene: Node = $CurrentScene
+onready var currentScene: SceneManager = $CurrentScene
 onready var animPlayer: AnimationPlayer = $ScreenTransitionLayer/AnimationPlayer
-onready var soundManager: Node = $GameSoundManager
+onready var soundManager: SoundManager = $GameSoundManager
 
 var state: int setget set_game_state, get_game_state
 var next_scene_path: String = ""
@@ -29,7 +25,7 @@ func set_game_state(new_state: int) -> void:
 	
 	match state:
 		GameData.GAME_STATES.MAIN_MENU:
-			soundManager.change_music(MAIN_MENU_MUSIC, 0, 5)
+			soundManager.change_music(GameData.MAIN_MENU_MUSIC, 0, 5)
 			if currentScene.get_child_count() == 0:
 				currentScene.add_child_path("res://scenes/menus/MainMenu.tscn")
 			else:
@@ -40,7 +36,7 @@ func set_game_state(new_state: int) -> void:
 				animPlayer.play("fade_to_normal")
 		
 		GameData.GAME_STATES.TANK_CREATION:
-			soundManager.change_music(TANK_CREATION_MUSIC, -30, 1)
+			soundManager.change_music(GameData.TANK_CREATION_MUSIC, 0, 1)
 			animPlayer.play("fade_to_black")
 			yield(animPlayer, "animation_finished")
 			currentScene.queue_child_index(0)
@@ -48,7 +44,7 @@ func set_game_state(new_state: int) -> void:
 			animPlayer.play("fade_to_normal")
 		
 		GameData.GAME_STATES.SHOP:
-			soundManager.change_music(MAIN_MENU_MUSIC, 0, 3)
+			soundManager.change_music(GameData.SHOP_MUSIC, 0, 3)
 			if previous_state == GameData.GAME_STATES.TANK_CREATION:
 				animPlayer.play("fade_to_black")
 				yield(animPlayer, "animation_finished")
@@ -57,8 +53,8 @@ func set_game_state(new_state: int) -> void:
 			animPlayer.play("fade_to_normal")
 		
 		GameData.GAME_STATES.BATTLE:
-			var rng_index: int = Utils.get_random_index_range(0, (GameData.battle_music.size() - 1))
-			soundManager.change_music(load(GameData.battle_music[rng_index]), -30, 2)
+			soundManager.change_music(GameData.battle_music_list[Utils.get_rng_index(
+				GameData.battle_music_list.size())], 0, 2)
 			match previous_state:
 				GameData.GAME_STATES.ROUND_RANKING: 
 					Utils.set_new_round_data()
@@ -81,7 +77,7 @@ func set_game_state(new_state: int) -> void:
 			animPlayer.play("fade_to_normal")
 		
 		GameData.GAME_STATES.ROUND_RANKING:
-			soundManager.change_music(MAIN_MENU_MUSIC, 0, 3)
+			soundManager.change_music(GameData.MAIN_MENU_MUSIC, 0, 3)
 			currentScene.add_child_path("res://scenes/menus/Rankings.tscn")
 		
 		GameData.GAME_STATES.PAUSE:
@@ -91,7 +87,7 @@ func set_game_state(new_state: int) -> void:
 			get_tree().paused = true
 
 		GameData.GAME_STATES.FINAL_SCORE:
-			soundManager.change_music(MAIN_MENU_MUSIC, 0, 3)
+			soundManager.change_music(GameData.MAIN_MENU_MUSIC, 0, 3)
 			currentScene.add_child_path("res://scenes/menus/FinalScore.tscn")
 
 func get_game_state() -> int:
