@@ -82,6 +82,8 @@ const BATTLE_MUSIC_3 = preload("res://assets/audio/music/battle-music-3.ogg")
 const HOVER_SFX1 = preload("res://assets/audio/ui/button-hover-1.wav")
 const HOVER_SFX2 = preload("res://assets/audio/ui/button-hover-2.wav")
 const PRESSED_SFX = preload("res://assets/audio/ui/button-pressed.wav")
+const CONFIRM_SFX = preload("res://assets/audio/ui/confirm.wav")
+const DECLINE_SFX = preload("res://assets/audio/ui/decline.wav")
 
 const TANK_SFX_ANGLE_1 = preload("res://assets/audio/tank/angle-change-1.wav")
 const TANK_SFX_ANGLE_2 = preload("res://assets/audio/tank/angle-change-2.wav")

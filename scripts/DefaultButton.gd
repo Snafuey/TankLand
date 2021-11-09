@@ -10,7 +10,6 @@ func _on_Button_down() -> void:
 
 
 func _on_Button_mouse_entered() -> void:
-	randomize()
 	buttonTexture.texture = GameData.HOVER_TEXTURE
 	sfxPlayer.stream = GameData.button_hover_list[Utils.get_rng_index(
 		GameData.button_hover_list.size())]

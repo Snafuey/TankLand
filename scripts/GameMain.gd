@@ -97,5 +97,3 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 	if event.is_action_released("pause"):
 		get_tree().set_input_as_handled()
 		self.state = GameData.GAME_STATES.PAUSE
-		
-

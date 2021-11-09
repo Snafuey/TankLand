@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://resources/SliderTheme.tres" type="Theme" id=1]
+[ext_resource path="res://scripts/VolumeSlider.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxLine" id=1]
+color = Color( 0.235294, 0.235294, 0.235294, 1 )
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 4
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.392157, 0.392157, 0.392157, 1 )
+
+[sub_resource type="StyleBoxLine" id=3]
+color = Color( 0.392157, 0.392157, 0.392157, 1 )
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 4
+
+[node name="VolumeSlider" type="HSlider"]
+margin_top = 74.0
+margin_right = 326.0
+margin_bottom = 90.0
+theme = ExtResource( 1 )
+custom_styles/slider = SubResource( 1 )
+custom_styles/grabber_area_highlight = SubResource( 2 )
+custom_styles/grabber_area = SubResource( 3 )
+max_value = 1.0
+step = 0.0
+value = 0.5
+tick_count = 25
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+bus_name = "Master"
+
+[connection signal="value_changed" from="." to="." method="_on_VolumeSlider_value_changed"]
