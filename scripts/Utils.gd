@@ -98,6 +98,10 @@ static func get_total_rounds() -> int:
 	var rounds: int = GameData.game_settings["Rounds"]
 	return rounds
 
+static func get_saved_bus_value(key: String) -> float:
+	var value: float = GameData.game_settings["VolumeSettings"][key]
+	return  value
+
 static func get_remaining_rounds(current_round: int) -> int:
 	var rounds: int = GameData.game_settings["Rounds"] - current_round
 	return rounds
@@ -118,6 +122,23 @@ static func set_total_rounds(value: int) -> void:
 
 static func set_total_tank_number(value: int) -> void:
 	GameData.game_settings["NumOfTanks"] = value
+
+static func change_bus_volume(bus_index: int, value: float) -> void:
+	AudioServer.set_bus_volume_db(bus_index, linear2db(value))
+
+static func set_all_bus_volumes_from_save() -> void:
+	for key in GameData.game_settings["VolumeSettings"].keys():
+		change_bus_volume(AudioServer.get_bus_index(key), get_saved_bus_value(key))
+
+static func save_volume_settings() -> void:
+	for bus_index in AudioServer.bus_count:
+		var value: float = db2linear(AudioServer.get_bus_volume_db(bus_index))
+		GameData.game_settings["VolumeSettings"][AudioServer.get_bus_name(bus_index)] = value
+	GameData.save_settings()
+
+static func restore_default_volume_settings() -> void:
+	GameData.game_settings["VolumeSettings"] = GameData.DEFAULT_VOLUME.duplicate()
+	set_all_bus_volumes_from_save()
 
 static func set_new_round_data() -> void:
 	var player_list: Array = get_tank_data_keys()

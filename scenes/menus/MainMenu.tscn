@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/menus/DefaultButton.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sprites/Main Menu Background.png" type="Texture" id=2]
-[ext_resource path="res://scenes/parts/MatchNumberSelector.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/parts/MenuQtySelector.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/fonts/RobotoBold24.tres" type="DynamicFont" id=4]
 [ext_resource path="res://scripts/MainMenu.gd" type="Script" id=9]
-[ext_resource path="res://scenes/parts/PlayerNumberSelector.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/parts/UIWindow.tscn" type="PackedScene" id=12]
 
 [node name="MainMenu" type="Control"]
@@ -47,13 +46,14 @@ rect_min_size = Vector2( 0, 48 )
 custom_fonts/font = ExtResource( 4 )
 text = "START"
 
-[node name="PlayerNumberSelector" parent="HBox/UIWindow/Margin/VBox" instance=ExtResource( 10 )]
+[node name="PlayerQtySelector" parent="HBox/UIWindow/Margin/VBox" instance=ExtResource( 3 )]
 margin_top = 62.0
 margin_bottom = 95.0
 
-[node name="MatchNumberSelector" parent="HBox/UIWindow/Margin/VBox" instance=ExtResource( 3 )]
+[node name="RoundQtySelector" parent="HBox/UIWindow/Margin/VBox" instance=ExtResource( 3 )]
 margin_top = 109.0
 margin_bottom = 142.0
+type_name = 1
 
 [node name="WeaponsButton" parent="HBox/UIWindow/Margin/VBox" instance=ExtResource( 1 )]
 margin_top = 156.0

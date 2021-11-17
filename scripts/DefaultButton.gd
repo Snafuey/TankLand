@@ -1,11 +1,19 @@
 extends Button
 
+enum type{OK, CANCEL}
+
+export(type) var sound_type
+
 onready var buttonTexture: NinePatchRect = $Texture
 onready var sfxPlayer: AudioStreamPlayer = $SFX
 
 func _on_Button_down() -> void:
 	buttonTexture.texture = GameData.PRESSED_TEXTURE
-	sfxPlayer.stream = GameData.PRESSED_SFX
+	match sound_type:
+		type.OK:
+			sfxPlayer.stream = GameData.PRESSED_SFX
+		type.CANCEL:
+			sfxPlayer.stream = GameData.CANCEL_SFX
 	sfxPlayer.play()
 
 

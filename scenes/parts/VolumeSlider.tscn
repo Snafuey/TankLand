@@ -18,7 +18,9 @@ grow_begin = 0.0
 grow_end = 0.0
 thickness = 4
 
-[node name="VolumeSlider" type="HSlider"]
+[node name="VolumeSlider" type="HSlider" groups=[
+"volumeSliders",
+]]
 margin_top = 74.0
 margin_right = 326.0
 margin_bottom = 90.0
